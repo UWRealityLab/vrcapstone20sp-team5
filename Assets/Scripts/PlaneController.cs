@@ -20,17 +20,18 @@ public class PlaneController : MonoBehaviour
     void Start()
     {
         MLPlanes.Start();
+        RequestPlanes();
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeSinceLastRequest += Time.deltaTime;
-        if (timeSinceLastRequest > timeout)
-        {
-            timeSinceLastRequest = 0f;
-            RequestPlanes();
-        }
+        // timeSinceLastRequest += Time.deltaTime;
+        // if (timeSinceLastRequest > timeout)
+        // {
+        //     timeSinceLastRequest = 0f;
+        //     RequestPlanes();
+        // }
     }
 
     void RequestPlanes()
