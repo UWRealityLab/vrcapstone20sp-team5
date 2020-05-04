@@ -9,7 +9,7 @@ public class PlaneController : MonoBehaviour
     public Transform BBoxTransform; // Determines center of region for plane extraction
     public Vector3 BBoxExtents;     // Determines size of BBoxTransform region
                                     // (0, 0, 0) = boundless
-    private float timeout = 5f;
+    private float timeout = 1000f;
     private float timeSinceLastRequest = 0f;
     private MLPlanes.QueryParams _queryParams = new MLPlanes.QueryParams();
     public MLPlanes.QueryFlags QueryFlags;
@@ -20,6 +20,7 @@ public class PlaneController : MonoBehaviour
     void Start()
     {
         MLPlanes.Start();
+        RequestPlanes();
     }
 
     // Update is called once per frame

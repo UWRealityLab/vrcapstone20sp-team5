@@ -7,7 +7,7 @@ public class TimedSpawn : MonoBehaviour
     public GameObject ball;
     public bool stopSpawning = false;
     public float spawnTime;
-    public float spawnDelay;
+    public float spawnDelay = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +17,11 @@ public class TimedSpawn : MonoBehaviour
 
     public void SpawnObject() 
     {
-        Instantiate(Resources.Load("ball"), transform.position, transform.rotation);
-        if(stopSpawning) {
+        GameObject spawner = (GameObject) Resources.Load("Spawner");
+        Instantiate(spawner, transform.position, transform.rotation);
+
+        if (stopSpawning) 
+        {
             CancelInvoke("SpawnObject");
         }
     }

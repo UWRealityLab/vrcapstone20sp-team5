@@ -12,7 +12,7 @@ public class MeshingScript : MonoBehaviour {
    #endregion
 
    #region Private Variables
-   private bool _visible = true;
+   private bool _visible = false;
    #endregion
 
    #region Unity Methods
