@@ -70,8 +70,8 @@ MonoBehaviour:
     vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
-    showTransformTool: 1
-    showPathBounds: 0
+    showTransformTool: 0
+    showPathBounds: 1
     showPerSegmentBounds: 0
     displayAnchorPoints: 1
     displayControlPoints: 1
@@ -80,7 +80,7 @@ MonoBehaviour:
     keepConstantHandleSize: 0
     showNormalsInVertexMode: 0
     showBezierPathInVertexMode: 1
-    showDisplayOptions: 1
+    showDisplayOptions: 0
     showPathOptions: 1
     showVertexPathDisplayOptions: 1
     showVertexPathOptions: 1

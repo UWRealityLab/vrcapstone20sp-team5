@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf5b356e131a944286fec26d7c40b4e, type: 3}
   m_Name: MagicLeapManifestSettings
   m_EditorClassIdentifier: 
-  m_MinimumAPILevel: 5
+  m_MinimumAPILevel: 6
   m_PrivilegeGroups:
   - m_Name: Autogranted
     m_Privileges:
@@ -44,7 +44,7 @@ MonoBehaviour:
       m_Enabled: 0
       m_Name: ConnectionAccess
     - m_ApiLevel: 1
-      m_Enabled: 0
+      m_Enabled: 1
       m_Name: ControllerPose
     - m_ApiLevel: 7
       m_Enabled: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
       m_Enabled: 0
       m_Name: WifiStatusRead
     - m_ApiLevel: 1
-      m_Enabled: 0
+      m_Enabled: 1
       m_Name: WorldReconstruction
   - m_Name: Sensitive
     m_Privileges:
