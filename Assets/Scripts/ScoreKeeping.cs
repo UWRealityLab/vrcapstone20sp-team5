@@ -15,7 +15,7 @@ public class ScoreKeeping : MonoBehaviour
             score += 1; // total score increment
 
             // check ball collision position to categorize exercise
-            if (other.gameObject.transform.position.y >= 0.2) {
+            if (other.gameObject.transform.position.y >= 0.0) {
                 up +=  1;
             } else if (other.gameObject.transform.position.y <= -0.70) {
                 down += 1;

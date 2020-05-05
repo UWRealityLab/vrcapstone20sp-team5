@@ -14,6 +14,7 @@ public class PlaneController : MonoBehaviour
     public Text ScanText;
     public int Threshold = 20;
     public bool Completed = false;
+    public float ScanningTimeOut = 30f; 
 
 
     private MLPlanes.QueryParams _queryParams = new MLPlanes.QueryParams();
@@ -21,6 +22,7 @@ public class PlaneController : MonoBehaviour
     
     private float timeout = 5f;
     private float timeSinceLastRequest = 0f;
+    private float totalTimeElapsed = 0f;
     HashSet<ulong> planeId = new HashSet<ulong>();
     public List<GameObject> planeCache = new List<GameObject>();
 
@@ -28,7 +30,7 @@ public class PlaneController : MonoBehaviour
     void Start()
     {
         MLPlanes.Start();
-        ScanText.text = "Scanning for walls/ceiling/floor";
+        ScanText.text = "Scanning for walls/ceiling/floor ";
         // RequestPlanes();
     }
 
@@ -42,12 +44,18 @@ public class PlaneController : MonoBehaviour
     void Update()
     {
         timeSinceLastRequest += Time.deltaTime;
+        totalTimeElapsed += Time.deltaTime;
+        if (!Completed) {
+            ScanText.text = "Scanning for walls/ceiling/floor " + 
+              (planeCache.Count/Threshold*100).ToString() + "%";
+        }
+        
         if (timeSinceLastRequest > timeout && !Completed)
         {
             timeSinceLastRequest = 0f;
             RequestPlanes();
 
-            if (planeCache.Count >= Threshold) {
+            if (planeCache.Count >= Threshold || totalTimeElapsed > ScanningTimeOut) {
                 Completed = true;
                 MLPlanes.Stop();
                 ScanText.text = "Scanning Completed";

@@ -16,10 +16,6 @@ public class DisplayTrailAndBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (path != null){
-            // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
-            path.pathUpdated += OnPathChanged;
-        }
         trail = Instantiate(trail, path.path.GetPointAtDistance(0), path.path.GetRotationAtDistance(0));
         travelDst = 0;
     }
@@ -43,7 +39,6 @@ public class DisplayTrailAndBall : MonoBehaviour
         if (trail != null) 
         {
             trail.transform.position = path.path.GetPointAtDistance(travelDst, EndOfPathInstruction.Stop);
-            trail.transform.rotation = path.path.GetRotationAtDistance(travelDst, EndOfPathInstruction.Stop);
         }
 
         float prevDelay = delay;
@@ -61,11 +56,5 @@ public class DisplayTrailAndBall : MonoBehaviour
                 ball.transform.rotation = path.path.GetRotationAtDistance(-delay * speed, EndOfPathInstruction.Stop);
             }
         }
-    }
-
-    // If the path changes during the game, update the distance travelled so that the follower's position on the new path
-    // is as close as possible to its position on the old path
-    void OnPathChanged() {
-        travelDst = path.path.GetClosestDistanceAlongPath(transform.position);
     }
 }

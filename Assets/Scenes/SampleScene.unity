@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
       propertyPath: QueryFlags
-      value: 448
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
@@ -664,7 +664,7 @@ MonoBehaviour:
   Ball: {fileID: 1413397522656654392, guid: 7278458ff334d4c488a9f2effb50a6c0, type: 3}
   BallScript: {fileID: 3727835927676852211, guid: 7278458ff334d4c488a9f2effb50a6c0,
     type: 3}
-  SpawnFrequency: 10
+  SpawnFrequency: 5
   ScanText: {fileID: 1685242035}
 --- !u!1 &1685242033
 GameObject:
@@ -1000,7 +1000,7 @@ PrefabInstance:
     - target: {fileID: 6145780334282166515, guid: 219e24ef5ba474fbfb1a3e9d25fe5788,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1
+      value: 2.137937
       objectReference: {fileID: 0}
     - target: {fileID: 6145780334282166515, guid: 219e24ef5ba474fbfb1a3e9d25fe5788,
         type: 3}

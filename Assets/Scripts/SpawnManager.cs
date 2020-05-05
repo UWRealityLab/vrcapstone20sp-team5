@@ -78,12 +78,12 @@ namespace PathCreation {
 
         // adjust spawn location and rotation (normal vector of the plane)
         Vector3 normal = StartPlane.transform.rotation*new Vector3(0, 0, 1);
-        BallScript.path.transform.position = new Vector3(StartX, StartY, StartZ);
+        Vector3 proj = Vector3.ProjectOnPlane(new Vector3(StartX, StartY, StartZ), normal);
+        BallScript.path.transform.position = proj;
         BallScript.path.transform.rotation = Quaternion.Euler(normal);
 
         // spawn the train and ball, 
-        // location and rotation here does not seem to make a difference
-        Instantiate(Ball, new Vector3(0, 0, 0), Quaternion.Euler(normal));
+        Instantiate(Ball);
         
     }
 
