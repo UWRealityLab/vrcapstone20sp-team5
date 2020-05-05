@@ -60,7 +60,8 @@ namespace PathCreation {
         int StartPlaneIndex = 0;
         GameObject StartPlane = PlaneScript.planeCache[StartPlaneIndex];
         
-        while (xmin > 4f || xmax < -4f || ymin > 0.3f || ymax < -1.2f || zmin > 4f || zmax < -4f) {
+        // choose a plane within the range
+        while (xmin > 4f || xmax < -4f || ymin > 0.3f ||  zmin > 4f || zmax < -4f) {
             StartPlaneIndex = Random.Range(0, numPlane);
             xmin = StartPlane.transform.position.x - StartPlane.transform.localScale.x/2;
             xmax = StartPlane.transform.position.x + StartPlane.transform.localScale.x/2;
@@ -70,13 +71,18 @@ namespace PathCreation {
             zmax = StartPlane.transform.position.z + StartPlane.transform.localScale.z/2;
         }
 
+        // make sure spawn point is not too high/low/far
         float StartX = Random.Range(Max(xmin, -4f), Min(4f, xmax));
-        float StartY = Random.Range(Max(-1.2f, ymin), Min(.5f, ymax));
+        float StartY = Random.Range(ymin, Min(.5f, ymax));
         float StartZ = Random.Range(Max(zmin, -4f), Min(4f, zmax));
 
+        // adjust spawn location and rotation (normal vector of the plane)
         Vector3 normal = StartPlane.transform.rotation*new Vector3(0, 0, 1);
         BallScript.path.transform.position = new Vector3(StartX, StartY, StartZ);
+        BallScript.path.transform.rotation = Quaternion.Euler(normal);
 
+        // spawn the train and ball, 
+        // location and rotation here does not seem to make a difference
         Instantiate(Ball, new Vector3(0, 0, 0), Quaternion.Euler(normal));
         
     }

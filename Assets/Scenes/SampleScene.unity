@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
       propertyPath: QueryFlags
-      value: 320
+      value: 448
       objectReference: {fileID: 0}
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
@@ -590,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
       propertyPath: Threshold
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8970750503288788148, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
@@ -664,7 +664,7 @@ MonoBehaviour:
   Ball: {fileID: 1413397522656654392, guid: 7278458ff334d4c488a9f2effb50a6c0, type: 3}
   BallScript: {fileID: 3727835927676852211, guid: 7278458ff334d4c488a9f2effb50a6c0,
     type: 3}
-  SpawnFrequency: 15
+  SpawnFrequency: 10
   ScanText: {fileID: 1685242035}
 --- !u!1 &1685242033
 GameObject:
