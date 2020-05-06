@@ -11,7 +11,6 @@ namespace PathCreation {
     #region Public Variables  
     public PlaneController PlaneScript;
     public GameObject TrailAndBall;
-    public DisplayTrailAndBall BallScript;
     public float SpawnFrequency = 10f;
     public Text ScanText;
     #endregion
@@ -56,45 +55,6 @@ namespace PathCreation {
     // first select a random plane
     // then randomly select one point on the plane to spawn the ball
     private void RandomSpawn2() {
-        // float xmin = 10f, xmax = -10f, ymin = 10f, ymax = -10f, zmin = 10f, zmax = -10f;
-        // int StartPlaneIndex = 0;
-        // GameObject StartPlane = PlaneScript.planeCache[StartPlaneIndex];
-        
-        // // choose a plane within the range
-        // while (xmin > 4f || xmax < -4f || ymin > 0.3f ||  zmin > 4f || zmax < -4f) {
-        //     StartPlaneIndex = Random.Range(0, numPlane);
-        //     StartPlane = PlaneScript.planeCache[StartPlaneIndex];
-        //     xmin = StartPlane.transform.position.x - StartPlane.transform.localScale.x/2;
-        //     xmax = StartPlane.transform.position.x + StartPlane.transform.localScale.x/2;
-        //     ymin = StartPlane.transform.position.y - StartPlane.transform.localScale.y/2;
-        //     ymax = StartPlane.transform.position.y + StartPlane.transform.localScale.y/2;
-        //     zmin = StartPlane.transform.position.z - StartPlane.transform.localScale.z/2;
-        //     zmax = StartPlane.transform.position.z + StartPlane.transform.localScale.z/2;
-        // }
-
-        // // // make sure spawn point is not too high/low/far
-        // // float StartX = Random.Range(Max(xmin, -4f), Min(4f, xmax));
-        // // float StartY = Random.Range(ymin, Min(.5f, ymax));
-        // // float StartZ = Random.Range(Max(zmin, -4f), Min(4f, zmax));
-
-        // // // adjust spawn location and rotation (normal vector of the plane)
-        // // Vector3 normal = StartPlane.transform.rotation*new Vector3(0, 0, 1);
-        // // Vector3 proj = Vector3.ProjectOnPlane(new Vector3(StartX, StartY, StartZ), normal);
-        
-        // // BallScript.path.transform.position = proj;
-        // // BallScript.path.transform.rotation = Quaternion.Euler(normal);
-        // float width = Random.Range(-0.5f, 0.5f);
-        // float height = Random.Range(-0.5f, 0.5f);
-        // Vector3 right = StartPlane.transform.rotation*Vector3.right;
-        // Vector3 location = StartPlane.transform.position + 
-        //     right*(StartPlane.transform.localScale.x * width);
-        
-        // location = location + Vector3.up * (StartPlane.transform.localScale.y*height);
-
-        // BallScript.path.transform.position = location;
-        // BallScript.path.transform.rotation = Quaternion.LookRotation(StartPlane.transform.rotation*Vector3.forward);
-        // // spawn the train and ball, 
-        // Instantiate(Ball);
 
         GameObject planeStart = PlaneScript.planeCache[Random.Range(0, numPlane)];
         GameObject planeEnd = planeStart;
