@@ -33,7 +33,7 @@ public class Explosion : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject != startPlane && other.gameObject.tag == "Collision") explode();
+        // if (other.gameObject != startPlane && other.gameObject.tag == "Collision") explode();
     }
 
     public void explode() {

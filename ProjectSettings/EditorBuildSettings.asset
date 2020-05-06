@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/New Scene.unity
     guid: 534f090ec9e744bd3a5b1b556f3e57eb
-  - enabled: 1
+  - enabled: 0
     path: Assets/MagicLeap-Tools/Examples/Playspace/Scenes/Playspace.unity
     guid: d88cdd6c208270b469fec1a14c9aef08
+  - enabled: 1
+    path: Assets/Scenes/Sample3.unity
+    guid: d7303fca973ee4c8db1553fa61c29365
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: eec30e6fae069498b8f1634a31083cdc,
       type: 2}
