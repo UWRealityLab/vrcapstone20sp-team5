@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
       propertyPath: QueryFlags
-      value: 320
+      value: 448
       objectReference: {fileID: 0}
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
@@ -590,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 8970750503288788147, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}
       propertyPath: Threshold
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8970750503288788148, guid: 4e9236e2da6e38346a85cf86fad71101,
         type: 3}

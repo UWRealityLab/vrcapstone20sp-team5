@@ -31,7 +31,10 @@ public class DisplayTrailAndBall : MonoBehaviour
         if (ball == null || ball.transform.position == path.path.GetPointAtTime(1, EndOfPathInstruction.Stop)) 
         {
             // the ball can be null if it is caught and destoryed
-            if (ball != null) Destroy(ball);
+            if (ball != null) {
+                Destroy(ball);
+            }
+            Destroy(trail);
             Destroy(this.gameObject);
         }
         

@@ -63,6 +63,7 @@ namespace PathCreation {
         // choose a plane within the range
         while (xmin > 4f || xmax < -4f || ymin > 0.3f ||  zmin > 4f || zmax < -4f) {
             StartPlaneIndex = Random.Range(0, numPlane);
+            StartPlane = PlaneScript.planeCache[StartPlaneIndex];
             xmin = StartPlane.transform.position.x - StartPlane.transform.localScale.x/2;
             xmax = StartPlane.transform.position.x + StartPlane.transform.localScale.x/2;
             ymin = StartPlane.transform.position.y - StartPlane.transform.localScale.y/2;
@@ -71,17 +72,27 @@ namespace PathCreation {
             zmax = StartPlane.transform.position.z + StartPlane.transform.localScale.z/2;
         }
 
-        // make sure spawn point is not too high/low/far
-        float StartX = Random.Range(Max(xmin, -4f), Min(4f, xmax));
-        float StartY = Random.Range(ymin, Min(.5f, ymax));
-        float StartZ = Random.Range(Max(zmin, -4f), Min(4f, zmax));
+        // // make sure spawn point is not too high/low/far
+        // float StartX = Random.Range(Max(xmin, -4f), Min(4f, xmax));
+        // float StartY = Random.Range(ymin, Min(.5f, ymax));
+        // float StartZ = Random.Range(Max(zmin, -4f), Min(4f, zmax));
 
-        // adjust spawn location and rotation (normal vector of the plane)
-        Vector3 normal = StartPlane.transform.rotation*new Vector3(0, 0, 1);
-        Vector3 proj = Vector3.ProjectOnPlane(new Vector3(StartX, StartY, StartZ), normal);
-        BallScript.path.transform.position = proj;
-        BallScript.path.transform.rotation = Quaternion.Euler(normal);
+        // // adjust spawn location and rotation (normal vector of the plane)
+        // Vector3 normal = StartPlane.transform.rotation*new Vector3(0, 0, 1);
+        // Vector3 proj = Vector3.ProjectOnPlane(new Vector3(StartX, StartY, StartZ), normal);
+        
+        // BallScript.path.transform.position = proj;
+        // BallScript.path.transform.rotation = Quaternion.Euler(normal);
+        float width = Random.Range(-0.5f, 0.5f);
+        float height = Random.Range(-0.5f, 0.5f);
+        Vector3 right = StartPlane.transform.rotation*Vector3.right;
+        Vector3 location = StartPlane.transform.position + 
+            right*(StartPlane.transform.localScale.x * width);
+        
+        location = location + Vector3.up * (StartPlane.transform.localScale.y*height);
 
+        BallScript.path.transform.position = location;
+        BallScript.path.transform.rotation = Quaternion.LookRotation(StartPlane.transform.rotation*Vector3.forward);
         // spawn the train and ball, 
         Instantiate(Ball);
         

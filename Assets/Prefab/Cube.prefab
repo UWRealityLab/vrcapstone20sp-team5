@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b291e5e254554b9db15e701b8305ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSize: 0.2
+  cubeSize: 0.1
   cubesInRow: 5
   explosionForce: 50
-  explosionRadius: 4
-  explosionUpward: 0.4
+  explosionRadius: 1
+  explosionUpward: 0.2

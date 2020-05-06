@@ -45,10 +45,6 @@ public class PlaneController : MonoBehaviour
     {
         timeSinceLastRequest += Time.deltaTime;
         totalTimeElapsed += Time.deltaTime;
-        if (!Completed) {
-            ScanText.text = "Scanning for walls/ceiling/floor " + 
-              (planeCache.Count/Threshold*100).ToString() + "%";
-        }
         
         if (timeSinceLastRequest > timeout && !Completed)
         {
@@ -60,6 +56,11 @@ public class PlaneController : MonoBehaviour
                 MLPlanes.Stop();
                 ScanText.text = "Scanning Completed";
             }
+        }
+
+        if (!Completed) {
+            ScanText.text = "Scanning for walls/ceiling/floor " + 
+              (planeCache.Count*100f/Threshold).ToString("1F") + "%";
         }
     }
 
