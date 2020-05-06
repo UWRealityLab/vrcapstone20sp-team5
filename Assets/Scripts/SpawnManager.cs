@@ -79,9 +79,37 @@ namespace PathCreation {
         Collider collEnd = planeEnd.GetComponent<Collider>();
         Vector3 endLoc = collEnd.ClosestPointOnBounds(new Vector3(xEnd, yEnd, zEnd));
 
+
+        // float xmin = 10f, xmax = -10f, ymin = 10f, ymax = -10f, zmin = 10f, zmax = -10f;
+        // int StartPlaneIndex = 0;
+        // GameObject StartPlane = PlaneScript.planeCache[StartPlaneIndex];
+        
+        // // choose a plane within the range
+        // while (xmin > 4f || xmax < -4f || ymin > 0.3f ||  zmin > 4f || zmax < -4f) {
+        //     StartPlaneIndex = Random.Range(0, numPlane);
+        //     StartPlane = PlaneScript.planeCache[StartPlaneIndex];
+        //     xmin = StartPlane.transform.position.x - StartPlane.transform.localScale.x/2;
+        //     xmax = StartPlane.transform.position.x + StartPlane.transform.localScale.x/2;
+        //     ymin = StartPlane.transform.position.y - StartPlane.transform.localScale.y/2;
+        //     ymax = StartPlane.transform.position.y + StartPlane.transform.localScale.y/2;
+        //     zmin = StartPlane.transform.position.z - StartPlane.transform.localScale.z/2;
+        //     zmax = StartPlane.transform.position.z + StartPlane.transform.localScale.z/2;
+        // }
+
+        // // make sure spawn point is not too high/low/far
+        // float StartX = Random.Range(Max(xmin, -4f), Min(4f, xmax));
+        // float StartY = Random.Range(ymin, Min(.5f, ymax));
+        // float StartZ = Random.Range(Max(zmin, -4f), Min(4f, zmax));
+
+
         spawner.start = startLoc;
         spawner.end = endLoc;
         spawner.middle = (startLoc + endLoc) / 2;
+
+        // set the startPlane in explosion script 
+        // so ball would not explode at the starting point
+        spawner.ball.GetComponent<Explosion>().startPlane = planeStart;
+        spawner.ball.GetComponent<Explosion>().endPlane= planeEnd;
         
         Instantiate(TrailAndBall, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
         

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4055490619789625037}
   - component: {fileID: -392624986587315216}
   - component: {fileID: 2641413328764012432}
-  - component: {fileID: 7853962367264730731}
+  - component: {fileID: 555480270788124558}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Ball
@@ -126,7 +126,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7853962367264730731
+--- !u!114 &555480270788124558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,8 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b291e5e254554b9db15e701b8305ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSize: 0.1
+  cubeSize: 0.03
   cubesInRow: 5
   explosionForce: 50
-  explosionRadius: 1
-  explosionUpward: 0.2
+  explosionRadius: 2
+  explosionUpward: 0.4
+  startPlane: {fileID: 0}
+  endPlane: {fileID: 0}

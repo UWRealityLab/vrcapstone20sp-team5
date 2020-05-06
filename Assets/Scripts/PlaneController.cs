@@ -31,14 +31,8 @@ public class PlaneController : MonoBehaviour
     {
         MLPlanes.Start();
         ScanText.text = "Scanning for walls/ceiling/floor ";
-        // RequestPlanes();
     }
 
-    private void OnDestroy()
-    {
-        // MLPlanes.Stop(); // Stop extracting planes when application exits
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -46,21 +40,29 @@ public class PlaneController : MonoBehaviour
         timeSinceLastRequest += Time.deltaTime;
         totalTimeElapsed += Time.deltaTime;
         
-        if (timeSinceLastRequest > timeout && !Completed)
-        {
-            timeSinceLastRequest = 0f;
-            RequestPlanes();
-
-            if (planeCache.Count >= Threshold || totalTimeElapsed > ScanningTimeOut) {
-                Completed = true;
-                MLPlanes.Stop();
-                ScanText.text = "Scanning Completed";
-            }
+        // check if plane extraction is completed by
+        // 1) checking if number of planes passes threshold
+        // 2) checking if time spent passes ScanningTimeOut
+        if (!Completed && (planeCache.Count >= Threshold || 
+            totalTimeElapsed > ScanningTimeOut)) {
+            Completed = true;
+            MLPlanes.Stop();
+            ScanText.text = "Scanning Completed";
         }
+        
 
+        // if plane extraction not completed,
+        // update progress for the user
         if (!Completed) {
             ScanText.text = "Scanning for walls/ceiling/floor " + 
-              (planeCache.Count*100f/Threshold).ToString("1F") + "%";
+              (planeCache.Count*100f/Threshold).ToString("F1") + "%";
+
+            // trigger more requrest
+            if (timeSinceLastRequest > timeout)
+            {
+                timeSinceLastRequest = 0f;
+                RequestPlanes();
+            }
         }
     }
 
@@ -77,12 +79,6 @@ public class PlaneController : MonoBehaviour
 
     private void HandleOnReceivedPlanes(MLResult result, MLPlanes.Plane[] planes, MLPlanes.Boundaries[] boundaries)
     {
-        // for (int i=planeCache.Count-1; i>=0; --i)
-        // {
-        //     Destroy(planeCache[i]);
-        //     planeCache.Remove(planeCache[i]);
-        // }
-
         GameObject newPlane;
         for (int i = 0; i < planes.Length; ++i)
         {
@@ -92,15 +88,10 @@ public class PlaneController : MonoBehaviour
                 newPlane.transform.position = planes[i].Center;
                 newPlane.transform.rotation = planes[i].Rotation;
                 newPlane.transform.localScale = new Vector3(planes[i].Width, planes[i].Height, 1f); // Set plane scale
+                newPlane.tag = "Collision";
                 planeCache.Add(newPlane);
             }
             
         }
-
-        // foreach (GameObject plane in planeCache)
-        // {
-        //     // Debug.Log("Added TimedSpawn script!");
-        //     plane.AddComponent<TimedSpawn>();
-        // }
     }
 }

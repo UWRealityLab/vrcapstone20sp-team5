@@ -345,6 +345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 1463616170062846, guid: 6884f69ad0adbb441905ff499f5d1ece, type: 3}
+      propertyPath: m_TagString
+      value: Collision
+      objectReference: {fileID: 0}
     - target: {fileID: 4724017855786006, guid: 6884f69ad0adbb441905ff499f5d1ece, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -663,7 +667,7 @@ MonoBehaviour:
   PlaneScript: {fileID: 1203331265}
   TrailAndBall: {fileID: 1413397522656654392, guid: 7278458ff334d4c488a9f2effb50a6c0,
     type: 3}
-  SpawnFrequency: 5
+  SpawnFrequency: 2
   ScanText: {fileID: 1685242035}
 --- !u!1 &1685242033
 GameObject:

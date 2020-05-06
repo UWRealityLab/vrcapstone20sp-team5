@@ -13,6 +13,8 @@ public class Explosion : MonoBehaviour {
     public float explosionForce = 50f;
     public float explosionRadius = 4f;
     public float explosionUpward = 0.4f;
+    public GameObject startPlane;
+    public GameObject endPlane;
 
     // Use this for initialization
     void Start() {
@@ -31,7 +33,7 @@ public class Explosion : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        explode();
+        if (other.gameObject != startPlane && other.gameObject.tag == "Collision") explode();
     }
 
     public void explode() {
