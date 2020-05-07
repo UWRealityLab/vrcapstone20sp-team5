@@ -53,10 +53,10 @@ MonoBehaviour:
       m_Enabled: 1
       m_Name: DrmCertificates
     - m_ApiLevel: 1
-      m_Enabled: 0
+      m_Enabled: 1
       m_Name: GesturesConfig
     - m_ApiLevel: 1
-      m_Enabled: 0
+      m_Enabled: 1
       m_Name: GesturesSubscribe
     - m_ApiLevel: 6
       m_Enabled: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
       m_Enabled: 1
       m_Name: LowLatencyLightwear
     - m_ApiLevel: 1
-      m_Enabled: 1
+      m_Enabled: 0
       m_Name: MusicService
     - m_ApiLevel: 1
       m_Enabled: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
       m_Enabled: 0
       m_Name: PowerInfo
     - m_ApiLevel: 1
-      m_Enabled: 1
+      m_Enabled: 0
       m_Name: RegisterBackgroundMusicService
     - m_ApiLevel: 1
       m_Enabled: 1
@@ -130,7 +130,7 @@ MonoBehaviour:
       m_Enabled: 0
       m_Name: LocalAreaNetwork
     - m_ApiLevel: 8
-      m_Enabled: 1
+      m_Enabled: 0
       m_Name: ObjectData
   - m_Name: Reality
     m_Privileges:
