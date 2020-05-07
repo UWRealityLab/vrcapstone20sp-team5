@@ -117,9 +117,9 @@ namespace PathCreation {
         init = true;
         numPlane = Playspace.Instance.Walls.Length + 2;
         spawnCount = 0;
-
+    }
 
     #endregion
-    }
+    
     }
 }
