@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
-using static System.Math;
 using MagicLeapTools;
 
 
@@ -21,6 +20,7 @@ namespace PathCreation {
     private int spawnCount;
     private float timer = 0.0f;
     private bool init = false;
+    private GameObject[] planes;
     #endregion
     
     #region Unity Methods
@@ -40,9 +40,6 @@ namespace PathCreation {
             
         }
     }
-    private void OnDestroy () {
-        
-    }
     #endregion
     
     #region Private Methods
@@ -50,74 +47,82 @@ namespace PathCreation {
     // first select a random plane
     // then randomly select one point on the plane to spawn the ball
     private void RandomSpawn() {
+        DisplayTrailAndBall spawner = TrailAndBall.GetComponent<DisplayTrailAndBall>();
 
         int startIndex = Random.Range(0, numPlane);
         int endIndex = startIndex;
         while (startIndex == endIndex) endIndex = Random.Range(0, numPlane);
 
-        PlayspaceWall planeStart = Playspace.Instance.Walls[startIndex];
-        PlayspaceWall planeEnd = Playspace.Instance.Walls[endIndex];
-
-        DisplayTrailAndBall spawner = TrailAndBall.GetComponent<DisplayTrailAndBall>();
-
-        float startWidthRandom = Random.Range(0f, 1f);
-        float startHeightRandom = Random.Range(-0.5f, 0.5f);
-
-        // Center - Up * (height * .5f);
-        // Center + Up * (height * .5f);
-
-        Vector3 startW = startWidthRandom*(planeStart.RightEdge - planeStart.LeftEdge) + planeStart.LeftEdge;
-        Vector3 startH = planeStart.Center + startHeightRandom*(Vector3.up*planeStart.height);
-        Vector3 startLoc = startW + Vector3.up*(planeStart.height*startHeightRandom);
-        
-        
-        float endWidthRandom = Random.Range(0f, 1f);
-        float endHeightRandom = Random.Range(-0.5f, 0.5f);
-
-        Vector3 endW = endWidthRandom*(planeEnd.RightEdge - planeEnd.LeftEdge) + planeEnd.LeftEdge;
-        Vector3 endH = planeEnd.Center + endHeightRandom*(Vector3.up*planeEnd.height);
-        Vector3 endLoc = endW + Vector3.up*(planeEnd.height*endHeightRandom);
+        Vector3 startLoc = GetRandomFromPlane(startIndex, spawner);
+        Vector3 endLoc = GetRandomFromPlane(endIndex, spawner);
 
         spawner.start = startLoc;
         spawner.end = endLoc;
         spawner.middle = (startLoc + endLoc) / 2;
-
-        // // set the startPlane in explosion script 
-        // // so ball would not explode at the starting point
-        // spawner.ball.GetComponent<Explosion>().startPlane = planeStart;
-        // spawner.ball.GetComponent<Explosion>().endPlane= planeEnd;
         
         Instantiate(TrailAndBall, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
-        
-        
+
+
     }
 
-    private void Awake()
-    {
+    private Vector3 GetRandomPointAroundPlane(GameObject plane) {
+        float x = Random.Range(plane.transform.position.x - plane.transform.localScale.x/2,
+            plane.transform.position.x + plane.transform.localScale.x/2);
+        float y = Random.Range(plane.transform.position.y - plane.transform.localScale.y/2,
+            plane.transform.position.y + plane.transform.localScale.y/2);
+        float z = Random.Range(plane.transform.position.z - plane.transform.localScale.z/2,
+            plane.transform.position.z + plane.transform.localScale.z/2);
+
+        return new Vector3(x, y, z);
+    }
+
+    private Vector3 GetRandomFromPlane(int index, DisplayTrailAndBall spawner) {
+        // [0, n - 2) are walls, n - 2 is floor, n - 1 is ceiling
+        // walls take linear algebra approach
+        // 
+        Vector3 loc;
+        Collider coll;
+        if (index < numPlane - 2) {
+            PlayspaceWall wall = Playspace.Instance.Walls[index];
+            float widthRandom = Random.Range(0f, 1f);
+            float heightRandom = Random.Range(-0.5f, 0.5f);
+
+            loc = widthRandom*(wall.RightEdge - wall.LeftEdge) + wall.LeftEdge;
+            loc += Vector3.up*(wall.height*heightRandom);
+
+            GameObject walls = Playspace.Instance.WallGeometry;
+            coll = walls.GetComponent<Collider>();
+        } else if (index < numPlane - 1) {
+            GameObject floor = Playspace.Instance.FloorGeometry;
+            Vector3 floorpoint = GetRandomPointAroundPlane(floor);
+
+            coll = floor.GetComponent<Collider>();
+            loc = coll.ClosestPointOnBounds(floorpoint);
+        } else {
+            GameObject ceiling = Playspace.Instance.CeilingGeometry;
+            Vector3 ceilingpoint = GetRandomPointAroundPlane(ceiling);
+
+            coll = ceiling.GetComponent<Collider>();
+            loc = coll.ClosestPointOnBounds(ceilingpoint);
+        }
+        spawner.ball.GetComponent<Explosion>().startPlaneCollider = coll;
+
+
+        return loc;
+    }
+
+    private void Awake() {
         //hooks:
-        Playspace.Instance.OnCleared.AddListener(HandleCleared);
         Playspace.Instance.OnCompleted.AddListener(HandleCompleted);
     }
 
-    private void HandleCleared()
-    {
-        // primaryWallPlaque.gameObject.SetActive(false);
-        // rearWallPlaque.gameObject.SetActive(false);
-        // rightWallPlaque.gameObject.SetActive(false);
-        // leftWallPlaque.gameObject.SetActive(false);
-        // ceilingPlaque.gameObject.SetActive(false);
-        // floorPlaque.gameObject.SetActive(false);
-        // centerPlaque.gameObject.SetActive(false);
-    }
-
-    private void HandleCompleted()
-    {
+    private void HandleCompleted() {
         init = true;
-        numPlane = Playspace.Instance.Walls.Length;
+        numPlane = Playspace.Instance.Walls.Length + 2;
         spawnCount = 0;
-    }
 
 
     #endregion
+    }
     }
 }

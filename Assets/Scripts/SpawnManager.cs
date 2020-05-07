@@ -108,8 +108,8 @@ namespace PathCreation {
 
         // set the startPlane in explosion script 
         // so ball would not explode at the starting point
-        spawner.ball.GetComponent<Explosion>().startPlane = planeStart;
-        spawner.ball.GetComponent<Explosion>().endPlane= planeEnd;
+        // spawner.ball.GetComponent<Explosion>().startPlane = planeStart;
+        // spawner.ball.GetComponent<Explosion>().endPlane= planeEnd;
         
         Instantiate(TrailAndBall, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
         

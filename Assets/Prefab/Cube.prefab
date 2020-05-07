@@ -139,9 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeSize: 0.03
-  cubesInRow: 5
-  explosionForce: 50
+  cubesInRow: 4
+  explosionForce: 20
   explosionRadius: 2
   explosionUpward: 0.4
-  startPlane: {fileID: 0}
-  endPlane: {fileID: 0}
+  startPlaneCollider: {fileID: 0}

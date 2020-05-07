@@ -829,6 +829,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldHeadLockCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4620353019166275548, guid: 7e285733484a34a0e8c81947c3bdfb7d,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e285733484a34a0e8c81947c3bdfb7d, type: 3}
 --- !u!1 &1813726039 stripped

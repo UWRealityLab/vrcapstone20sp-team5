@@ -49,4 +49,4 @@ MonoBehaviour:
   end: {x: 0, y: 0, z: 0}
   middle: {x: 0, y: 0, z: 0}
   speed: 0.5
-  delay: 3
+  delay: 5

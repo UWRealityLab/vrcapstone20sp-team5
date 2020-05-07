@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour {
   private bool _triggerPressed = false;
   private MLInput.Controller _control;
   private float timer = 0.0f;
+  private int prevScore = 0;
   #endregion
   
   #region Unity Methods
@@ -41,9 +42,11 @@ public class UIManager : MonoBehaviour {
   private void Update() {
     timer += Time.deltaTime;
 
-    // // Check the inputs and update the scene
-    // CheckControl();
-    SetScoreText();
+    // update score if changed
+    if (controllerScript.score > prevScore) {
+      SetScoreText();
+      prevScore = controllerScript.score;
+    }
     
     // Check and adjust for headlock status
     CheckStates();
@@ -93,6 +96,7 @@ public class UIManager : MonoBehaviour {
      summaryText.text = "";
 
      // clear all the score count and timer
+     prevScore = 0;
      controllerScript.score = 0;
      controllerScript.up = 0;
      controllerScript.medium = 0;
