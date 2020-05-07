@@ -7,9 +7,11 @@ namespace PathCreation.Examples
     public class PathFollower : MonoBehaviour
     {
         public PathCreator pathCreator;
+        public GameObject ball;
         public EndOfPathInstruction endOfPathInstruction;
         public float speed = 5;
         float distanceTravelled;
+        public float delay;
 
         void Start() {
             if (pathCreator != null)
@@ -26,6 +28,22 @@ namespace PathCreation.Examples
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+                
+                float prevDelay = delay;
+                delay -= Time.deltaTime;
+                if (delay < 0)
+                {
+                    // if this is the first time delay became less than 0, then instantiate the ball
+                    if (prevDelay >= 0) 
+                    {
+                        ball = Instantiate(ball, pathCreator.path.GetPointAtDistance(0), pathCreator.path.GetRotationAtDistance(0));
+                    }
+                    if (ball != null) 
+                    {
+                        ball.transform.position = pathCreator.path.GetPointAtDistance(-delay * speed, EndOfPathInstruction.Stop);
+                        ball.transform.rotation = pathCreator.path.GetRotationAtDistance(-delay * speed, EndOfPathInstruction.Stop);
+                    }
+                }
             }
         }
 

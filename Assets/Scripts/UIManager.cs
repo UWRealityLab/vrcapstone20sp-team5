@@ -18,11 +18,10 @@ public class UIManager : MonoBehaviour {
   
   #region Private Variables
   private HeadLockScript _headlock;
-  private const float _triggerThreshold = 0.2f;
-  private const float _rotspeed = 10.0f;
-  private bool _triggerPressed = false;
   private MLInput.Controller _control;
-  private float timer = 0.0f;
+  private float _timer = 0.0f;
+  private int _prevScore = 0;
+  private bool _summaryOn = false;
   #endregion
   
   #region Unity Methods
@@ -39,15 +38,16 @@ public class UIManager : MonoBehaviour {
     Reset();
   }
   private void Update() {
-    timer += Time.deltaTime;
+    _timer += Time.deltaTime;
 
-    // // Check the inputs and update the scene
-    // CheckControl();
-    SetScoreText();
+    // update score if changed
+    if (controllerScript.score > _prevScore) {
+      SetScoreText();
+      _prevScore = controllerScript.score;
+    }
     
     // Check and adjust for headlock status
     CheckStates();
-    CheckControl();
   }
   private void OnDestroy () {
     MLInput.OnControllerButtonUp -= OnButtonUp;
@@ -70,21 +70,7 @@ public class UIManager : MonoBehaviour {
         _headlock.HardHeadLock(WorldCanvas);
       }
     }
-    /// CheckControl
-   /// Monitor the trigger to spawn object
-   ///
-   private void CheckControl() {
-     if (_control.TriggerValue > _triggerThreshold) {
-       _triggerPressed = true;
-     }
-     else if (_control.TriggerValue == 0.0f && _triggerPressed) {
-       _triggerPressed = false;
-       // when trigger is pressed, spawn object
-       Instantiate(ball, _control.Position, _control.Orientation);
 
-       
-     }
-   }
    /// Reset
    /// Resets the scene back to the starting screen (score = 0)
    ///    
@@ -93,23 +79,27 @@ public class UIManager : MonoBehaviour {
      summaryText.text = "";
 
      // clear all the score count and timer
+     _prevScore = 0;
      controllerScript.score = 0;
      controllerScript.up = 0;
      controllerScript.medium = 0;
      controllerScript.down = 0;
-     timer = 0.0f;
+     _timer = 0.0f;
      SetScoreText();
    }
 
    /// OnButtonUp
-   /// Button event - show summary when bumper  is tapped
-   /// Button event - reset scene when home button is tapped
+   /// Button event - when home is tapped: show summary
+   /// Button event - when home is tapped again: reset scene
    private void OnButtonUp(byte controller_id, MLInput.Controller.Button button) {
-     if (button == MLInput.Controller.Button.Bumper) {
-       SetSummaryText();
-     }
      if (button == MLInput.Controller.Button.HomeTap) {
-       Reset();
+       if (!_summaryOn) {
+         _summaryOn = true;
+         SetSummaryText();
+       } else {
+         _summaryOn = false;
+         Reset();
+       }
      }
    }
 
@@ -125,7 +115,7 @@ public class UIManager : MonoBehaviour {
    private void SetSummaryText() {
      summaryText.text = "Summary:" + "\nScore: " + controllerScript.score.ToString() 
      + ";\nUp-stretch: " + controllerScript.up.ToString() + ";\nDown-squat: " + controllerScript.down.ToString()
-     + ";\nCurrent Session Time: " + (timer/60).ToString("F1")
+     + ";\nCurrent Session Time: " + (_timer/60).ToString("F1")
      + "mins;\nPress Home to start a new session";
    }
    #endregion

@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 4923840496249620955, guid: c948ea6b78a0b42e48e3da56aecd57c0, type: 3}
   trail: {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
-  path: {fileID: 6145780334282166512, guid: 219e24ef5ba474fbfb1a3e9d25fe5788, type: 3}
+  start: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}
+  middle: {x: 0, y: 0, z: 0}
   speed: 0.5
-  delay: 10
+  delay: 5
