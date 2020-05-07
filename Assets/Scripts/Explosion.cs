@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MagicLeapTools;
 
 public class Explosion : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class Explosion : MonoBehaviour {
     public float explosionForce = 50f;
     public float explosionRadius = 4f;
     public float explosionUpward = 0.4f;
+
+    private float time = 0f;
 
     // Use this for initialization
     void Start() {
@@ -27,7 +30,7 @@ public class Explosion : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        time += Time.deltaTime;
     }
 
     void OnDestroy() {
@@ -35,7 +38,31 @@ public class Explosion : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        // explode();
+        if (!OnPlaySpaceEdge(other)) explode();
+    }
+
+    private bool OnPlaySpaceEdge(Collider other) {
+        // Collider wallColl = Playspace.Instance.WallGeometry.GetComponent<Collider>();
+
+        // if (Vector3.Distance(this.transform.position, 
+        // wallColl.ClosestPoint(this.transform.position)) <= 0.10f) {
+        //     return true;
+        // }
+        
+        // Collider floorColl = Playspace.Instance.FloorGeometry.GetComponent<Collider>();
+        // if (Vector3.Distance(this.transform.position, 
+        //     floorColl.ClosestPoint(this.transform.position)) <= 0.10f) {
+        //         return true;
+        // }
+
+        // Collider ceilingColl = Playspace.Instance.CeilingGeometry.GetComponent<Collider>();
+        // if (Vector3.Distance(this.transform.position, 
+        //     ceilingColl.ClosestPoint(this.transform.position)) <= 0.10f) {
+        //         return true;
+        // }
+
+        if (time < 2f) return true;
+        return false;
     }
 
     public void explode() {
