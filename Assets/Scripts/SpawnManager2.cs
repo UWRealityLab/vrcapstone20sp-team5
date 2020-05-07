@@ -90,8 +90,6 @@ namespace PathCreation {
             loc = widthRandom*(wall.RightEdge - wall.LeftEdge) + wall.LeftEdge;
             loc += Vector3.up*(wall.height*heightRandom);
 
-            GameObject walls = Playspace.Instance.WallGeometry;
-            coll = walls.GetComponent<Collider>();
         } else if (index < numPlane - 1) {
             GameObject floor = Playspace.Instance.FloorGeometry;
             Vector3 floorpoint = GetRandomPointAroundPlane(floor);
@@ -105,7 +103,6 @@ namespace PathCreation {
             coll = ceiling.GetComponent<Collider>();
             loc = coll.ClosestPointOnBounds(ceilingpoint);
         }
-        spawner.ball.GetComponent<Explosion>().startPlaneCollider = coll;
 
 
         return loc;
