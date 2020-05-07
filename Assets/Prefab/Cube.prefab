@@ -143,4 +143,3 @@ MonoBehaviour:
   explosionForce: 20
   explosionRadius: 2
   explosionUpward: 0.4
-  startPlaneCollider: {fileID: 0}

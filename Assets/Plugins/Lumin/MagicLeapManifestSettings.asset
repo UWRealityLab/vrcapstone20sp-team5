@@ -130,7 +130,7 @@ MonoBehaviour:
       m_Enabled: 0
       m_Name: LocalAreaNetwork
     - m_ApiLevel: 8
-      m_Enabled: 0
+      m_Enabled: 1
       m_Name: ObjectData
   - m_Name: Reality
     m_Privileges:

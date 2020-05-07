@@ -34,9 +34,9 @@ public class Explosion : MonoBehaviour {
         explode();
     }
 
-    // private void OnTriggerEnter(Collider other) {
-    //     explode();
-    // }
+    private void OnTriggerEnter(Collider other) {
+        // explode();
+    }
 
     public void explode() {
         //make object disappear

@@ -78,8 +78,8 @@ namespace PathCreation {
 
     private Vector3 GetRandomFromPlane(int index, DisplayTrailAndBall spawner) {
         // [0, n - 2) are walls, n - 2 is floor, n - 1 is ceiling
-        // walls take linear algebra approach
-        // 
+        // walls take a linear algebra approach
+        // ceiling/floor takes the closest point on collider bound
         Vector3 loc;
         Collider coll;
         if (index < numPlane - 2) {
