@@ -18,7 +18,7 @@ namespace PathCreation {
     #region Private Variables
     private int numPlane;
     private int spawnCount;
-    private float timer = 0.0f;
+    private float timer;
     private bool init = false;
     private GameObject[] planes;
     #endregion
@@ -53,8 +53,8 @@ namespace PathCreation {
         int endIndex = startIndex;
         while (startIndex == endIndex) endIndex = Random.Range(0, numPlane);
 
-        Vector3 startLoc = GetRandomFromPlane(startIndex, spawner);
-        Vector3 endLoc = GetRandomFromPlane(endIndex, spawner);
+        Vector3 startLoc = GetRandomFromPlane(startIndex);
+        Vector3 endLoc = GetRandomFromPlane(endIndex);
 
         spawner.start = startLoc;
         spawner.end = endLoc;
@@ -76,7 +76,7 @@ namespace PathCreation {
         return new Vector3(x, y, z);
     }
 
-    private Vector3 GetRandomFromPlane(int index, DisplayTrailAndBall spawner) {
+    private Vector3 GetRandomFromPlane(int index) {
         // [0, n - 2) are walls, n - 2 is floor, n - 1 is ceiling
         // walls take a linear algebra approach
         // ceiling/floor takes the closest point on collider bound
