@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 public class UIManager : MonoBehaviour {
@@ -9,6 +7,8 @@ public class UIManager : MonoBehaviour {
     public Text scoreText;
     public Text summaryText;
     public Text status;
+    public Text spawnCountText;
+    
     public ScoreKeeping scoreKeeper;
     #endregion
     
@@ -53,19 +53,18 @@ public class UIManager : MonoBehaviour {
     }
 
     private void OnScoreChange(int change, ScoreKeeping.ChangeType type) {
-        Debug.Log("Here");
         switch (type) {
             case ScoreKeeping.ChangeType.Down:
-                status.text = "down-squat +1!";
+                SetStatusText("down-squat +1!");
                 break;
             case ScoreKeeping.ChangeType.Up:
-                status.text = "up-strech +1!";
+                SetStatusText("up-strech +1!");
                 break;
             case ScoreKeeping.ChangeType.Middle:
-                status.text = "Good job!";
+                SetStatusText("Good job!");
                 break;
             case ScoreKeeping.ChangeType.Reset:
-                status.text = "";
+                SetStatusText("");
                 break;
             default:
                 break;
@@ -73,16 +72,26 @@ public class UIManager : MonoBehaviour {
         SetScoreText();
         SetSummaryText();
     }
+    #endregion
 
-    private void SetScoreText() {
+    #region Public Methods
+    public void SetStatusText(string text) {
+        status.text = text;
+    }
+
+    public void SetScoreText() {
         scoreText.text = "Score: " + scoreKeeper.score.ToString();
     }
 
-    private void SetSummaryText() {
+    public void SetSummaryText() {
         summaryText.text = "Summary:" + "\nScore: " + scoreKeeper.score.ToString() 
         + ";\nUp-stretch: " + scoreKeeper.up.ToString() + ";\nDown-squat: " + scoreKeeper.down.ToString()
         + ";\nCurrent Session Time: " + (scoreKeeper.timer/60).ToString("F1")
         + "mins;\nPress Home to start a new session";
+    }
+
+    public void SetSpawnCountText(int count) {
+        spawnCountText.text = "Spawned: " + count.ToString();
     }
     #endregion
 }

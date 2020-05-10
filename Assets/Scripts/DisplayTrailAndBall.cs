@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using PathCreation;
 
 public class DisplayTrailAndBall: MonoBehaviour
@@ -8,6 +6,9 @@ public class DisplayTrailAndBall: MonoBehaviour
 
     public GameObject ball;
     public GameObject trail;
+    public GameObject holePrefab;
+    public Quaternion startRotation;
+    public Quaternion endRotation;
     public Vector3 start;
     public Vector3 end;
     public Vector3 middle;
@@ -15,6 +16,17 @@ public class DisplayTrailAndBall: MonoBehaviour
     public float delay;
     private float travelDst;
     private VertexPath path;
+    private GameObject startHole;
+    private GameObject endHole;
+
+    public void setParams(Vector3 start, Vector3 end, Quaternion startRotation, Quaternion endRotation, Vector3 middle) {
+        this.start = start;
+        this.end = end;
+        this.startRotation = startRotation;
+        this.endRotation = endRotation;
+        this.middle = middle; 
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +34,8 @@ public class DisplayTrailAndBall: MonoBehaviour
         Vector3[] points = {start, middle, end};
         path = new VertexPath(new BezierPath(points), transform);
         trail = Instantiate(trail, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
+        startHole = Instantiate(holePrefab, start, startRotation);
+        endHole = Instantiate(holePrefab, end, endRotation);
         travelDst = 0;
     }
 
@@ -37,6 +51,8 @@ public class DisplayTrailAndBall: MonoBehaviour
         {
             // the ball can be null if it is caught and destoryed
             if (ball != null) Destroy(ball);
+            Destroy(startHole);
+            Destroy(endHole);
             Destroy(this.gameObject);
         }
         

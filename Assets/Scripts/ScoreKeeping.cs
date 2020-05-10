@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using MagicLeapTools;
 
 public class ScoreKeeping : MonoBehaviour
@@ -19,6 +16,7 @@ public class ScoreKeeping : MonoBehaviour
     [HideInInspector]
     public int down;
 
+    [HideInInspector]
     public float timer;
 
     [HideInInspector]
