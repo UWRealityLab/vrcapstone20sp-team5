@@ -28,6 +28,82 @@
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 		
 		<!-- Main -->
+		<section id="main" class="wrapper style2">
+			<div class="container">
+
+				<header class="major special">
+					<h2>Week 6 </h2>
+					<p>MVP Released</p>
+				</header>
+
+				<a href="#" class="image fit"><img src="images/blog6banner.jpg" alt="" /></a>
+
+				<header>
+					<h4>What We've Accomplished</h4>
+				</header>
+				<p>This week we released the MVP and live-steamed the demo on Thursday's session.</p>
+
+				<header>
+					<h4>New Release</h4>
+				</header>
+				<p><a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/releases/tag/v1.0.0">MVP Repository</a>
+					: including the Unity project and prebuilt <a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/blob/b1275075a2f5b6dc92d008d7d5c08314ca68d57f/MVP.mpk">MVP.mpk</a></p>
+
+				<header>
+					<h4>Code Update</h4>
+				</header>
+				<ol>
+					<li>Added Playspace: <a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/blob/b1275075a2f5b6dc92d008d7d5c08314ca68d57f/Assets/MagicLeap-Tools/Code/Environment/Playspace/Playspace.cs">Playspace.cs</a></a> </li>
+					<li>Added furniture meshing and collision: <a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/blob/b1275075a2f5b6dc92d008d7d5c08314ca68d57f/Assets/MagicLeap/Core/Assets/Prefabs/MLSpatialMapper.prefab">MLSpatialMapper.prefab</a></li>
+					<li>Modified spawning algorithm: <a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/blob/b1275075a2f5b6dc92d008d7d5c08314ca68d57f/Assets/Scripts/SpawnManager2.cs">SpawnManager2.cs</a></li>
+					<li>Modified exercise categorizing algorithm: <a href="https://github.com/UWRealityLab/vrcapstone20sp-team5/blob/b1275075a2f5b6dc92d008d7d5c08314ca68d57f/Assets/Scripts/ScoreKeeping.cs">ScoreKeeping.cs</a></li>
+				</ol>
+
+				<header>
+					<h4>Past Obstacles and Working Solutions</h4>
+				</header>
+				<p>Plane Extraction: The game requires detecting planes (walls/ceiling/floor) for ball to spwan or end its path.
+					The orginal plan is to use the existing cached planes built-in to Magic Leap. However, in the case that ML
+					 mapped the whole house/apartment, all the planes woule be activated and there is no effective way to narrow 
+					down the area to a reasonable range considering that players might move from where they wake up ML and each 
+					player's room size varies. Then we try to activly use the plane extraction functionality provided by ML at 
+					the beginning of each game, but the active plane extration runs into the same problems. Eventually, Playspace 
+					by ML seems to be the best solution, where players can define their own playing area and such an area can be 
+					cached for future usage.</p>
+
+				<p>Furniture Meshing: We envisioned the ball to crash on the furnitures if not catched before that. Such effect 
+					requires meshing for the furnitures, but the usual practice for collisions would cause the ball to crash on 
+					the spawning plane or something very close by (eg. a TV hanging the spawning plane), causing players to have 
+					lots of frustrations as such settings make some ball almost impossible to catch. Attempts to fix the issue 
+					including calculating the collision point distance from wall and exculding those that are close; categorize 
+					the meshing with tags and condition for collision crash effect. But none of them provides a satisfying effect
+					 visually or methematically. In the end, we added a timer for each ball. If a ball is spawned and collided 
+					 with the mesh within some threshold (eg. 2 seconds), we do not crash the ball. This current working solution 
+					 guarantees that no ball would collide on spawning wall or immediately after being spawned, but still allows 
+					 the balls to collide on furnitures in the future, reducing the player frustration overall while made the 
+					 visual effects possible.
+				</p>
+
+				<p>Exercise Categorizing: The original exercise categorizing system utilizes the ball location to count if a 
+					ball-catch is a stretch-up or squat-down. But the ball location turned out to be very misterious, thus we 
+					are currently using controller position instead. If the controller is sustituted in the future, other Solutions
+					 are needed for this part.</p>
+
+				<header>
+					<h4>Plans beyond MVP</h4>
+				</header>
+				<p>Moving forward, we are planning to polish the MVP and add more features, indluding:</p>
+				<ol>
+					<li>Ball Spawning Algorithm: polish on ball spawning location to prevent balls from being uncatchable.</li>
+					<li>Hand Meshing: explore hand meshing to replace one/both of the hand controls.</li>
+					<li>Audio: add sound effects an dmusic to the scene.</li>
+					<li>Ball Explosion Effects: add one more ball explosion effect to distinguish between catch and crash.</li>
+					<li>Main Menu: add a main menu for player to choose between different mode and adjust settings.</li>
+				</ol>
+				
+			</div>
+		</section>
+		<!-- Main -->
 		<section id="main" class="wrapper">
 			<div class="container">
 
