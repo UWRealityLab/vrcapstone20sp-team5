@@ -1,45 +1,72 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using MagicLeapTools;
 
 public class ScoreKeeping : MonoBehaviour
 {
     
+    [HideInInspector]
     public int score;
+
+    [HideInInspector]
     public int up;
+
+    [HideInInspector]
     public int medium;
+    
+    [HideInInspector]
     public int down;
-    public Text status;
-    private float _floorHeight;
-    private float _controllerHeight;
+
+    [HideInInspector]
+    public float timer;
+
+    [HideInInspector]
+    public enum ChangeType { Up, Middle, Down, Reset };
+
+    [HideInInspector]
+    public delegate void ScoreChangeNotifier(int change, ChangeType type);
+
+    public event ScoreChangeNotifier ScoreChange; 
+
+    public float upLimit = 1.7f;
+    public float downLimit = 0.6f;
+
+    private void Update() {
+        timer += Time.deltaTime;
+    }
     
     private void OnTriggerEnter(Collider other) {
-        _floorHeight = Playspace.Instance.FloorCenter.y;
-
         if (other.gameObject.tag == "Ball") {
-            score += 1; // total score increment
+            score++;
+            float floorHeight = Playspace.Instance.FloorCenter.y;
+            float controllerHeight = transform.position.y;
+            
             // check ball collision position to categorize exercise
-            _controllerHeight =  this.transform.position.y;
-
-            if (_controllerHeight - _floorHeight >= 1.70f) {
-                up +=  1;
-                status.text = "up-stretch +1!";
-            } else if (_controllerHeight - _floorHeight <= 0.60f) {
+            float height = controllerHeight - floorHeight;
+            ChangeType type;
+            if (height > upLimit) {
+                up += 1;
+                type = ChangeType.Up;
+            } else if (height < downLimit) {
                 down += 1;
-                status.text = "down-squat +1!";
+                type = ChangeType.Down;
             } else {
                 medium += 1;
-                status.text = "Good Job!";
+                type = ChangeType.Middle;
             }
 
-            Destroy(other.gameObject); // destroy immediately to avoid second collision
+            // Notify all event handler of ScoreChange
+            ScoreChange?.Invoke(1, type);
+
+            Destroy(other.gameObject);  // destroy immediately to avoid second collision
         }
     }
 
-    private void OnDestroy() {
-        status.text = "";
+    public void ResetScore() {
+        score = 0;
+        up = 0; 
+        medium = 0;
+        down = 0;
+        timer = 0;
+        ScoreChange?.Invoke(-1, ChangeType.Reset);
     }
-
 }
