@@ -43,11 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c988cdbdb0e4b799ecb539407e0f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 4923840496249620955, guid: c948ea6b78a0b42e48e3da56aecd57c0,
-    type: 3}
-  trailPrefab: {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e,
-    type: 3}
+  ball: {fileID: 4923840496249620955, guid: c948ea6b78a0b42e48e3da56aecd57c0, type: 3}
+  trail: {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
   holePrefab: {fileID: 3520255515145833166, guid: cdf80d4bea0bfe340befeb60fe22fa62,
     type: 3}
+  startRotation: {x: 0, y: 0, z: 0, w: 0}
+  endRotation: {x: 0, y: 0, z: 0, w: 0}
+  start: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}
+  middle: {x: 0, y: 0, z: 0}
   speed: 0.5
   delay: 5

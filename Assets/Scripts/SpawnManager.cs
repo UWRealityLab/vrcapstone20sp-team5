@@ -6,6 +6,9 @@ public class SpawnManager : MonoBehaviour {
 
     #region Public Variables  
     public float SpawnFrequency;
+    public float middlePointRange;
+    public float angleMin;
+    public float angleMax;
     public GameObject trailAndBall;
     #endregion
     
@@ -25,8 +28,8 @@ public class SpawnManager : MonoBehaviour {
         if (init) {
             if (timer > SpawnFrequency) {
                 timer = 0.0f;
-                spawnCount++;
                 RandomSpawn();
+                spawnCount++;
                 UIMnger.SetSpawnCountText(spawnCount);
             }
         }
@@ -52,8 +55,29 @@ public class SpawnManager : MonoBehaviour {
 
         (Vector3 startLoc, Quaternion startRot) = GetRandomFromPlane(startIndex);
         (Vector3 endLoc, Quaternion endRot) = GetRandomFromPlane(endIndex);
+        float angle = Quaternion.Angle(startRot, endRot);
+        while (angle < angleMin || angle > angleMax) {
+            endIndex = startIndex;
+            while (startIndex == endIndex) endIndex = Random.Range(0, numPlane);
+            (endLoc, endRot) = GetRandomFromPlane(endIndex); 
+            angle = Quaternion.Angle(startRot, endRot);
+        }
 
-        spawner.setParams(startLoc, endLoc, startRot, endRot, (startLoc + endLoc) / 2);
+        Vector3 middleLoc = (startLoc + endLoc) / 2 + 
+            new Vector3(Random.Range(-middlePointRange, middlePointRange), 
+                        Random.Range(-middlePointRange, middlePointRange),
+                        Random.Range(-middlePointRange, middlePointRange));
+        int count = 0;
+        while (Vector3.Angle(middleLoc - startLoc, startRot * Vector3.forward) > 90 ||
+               Vector3.Angle(middleLoc - endLoc, endRot * Vector3.forward) > 90) {
+            middleLoc = (startLoc + endLoc) / 2 + 
+                new Vector3(Random.Range(-middlePointRange, middlePointRange), 
+                        Random.Range(-middlePointRange, middlePointRange),
+                        Random.Range(-middlePointRange, middlePointRange));
+            if (count++ > 50) break;
+        }
+
+        spawner.setParams(startLoc, endLoc, startRot, endRot, middleLoc);
         Instantiate(trailAndBall, Vector3.zero, Quaternion.identity);
     }
 
