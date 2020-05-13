@@ -110,14 +110,14 @@ public class SpawnManager : MonoBehaviour {
         } else if (index < numPlane - 1) {
             GameObject floor = Playspace.Instance.FloorGeometry;
             loc = GetRandomPointAroundPlane(floor);
-            quat = floor.transform.rotation;
+            quat = Quaternion.Euler(90, 0, 0);
 
             coll = floor.GetComponent<Collider>();
             loc = coll.ClosestPointOnBounds(loc);
         } else {
             GameObject ceiling = Playspace.Instance.CeilingGeometry;
             loc = GetRandomPointAroundPlane(ceiling);
-            quat = ceiling.transform.rotation;
+            quat = Quaternion.Euler(270, 0, 0);
 
             coll = ceiling.GetComponent<Collider>();
             loc = coll.ClosestPointOnBounds(loc);
