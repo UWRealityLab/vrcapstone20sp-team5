@@ -98,6 +98,7 @@ public class SpawnManager : MonoBehaviour {
         // ceiling/floor takes the closest point on collider bound
         Vector3 loc;
         Quaternion quat;
+        Collider coll;
         if (index < numPlane - 2) {
             PlayspaceWall wall = Playspace.Instance.Walls[index];
             float widthRandom = Random.Range(0f, 1f);
@@ -110,10 +111,16 @@ public class SpawnManager : MonoBehaviour {
             GameObject floor = Playspace.Instance.FloorGeometry;
             loc = GetRandomPointAroundPlane(floor);
             quat = floor.transform.rotation;
+
+            coll = floor.GetComponent<Collider>();
+            loc = coll.ClosestPointOnBounds(loc);
         } else {
             GameObject ceiling = Playspace.Instance.CeilingGeometry;
             loc = GetRandomPointAroundPlane(ceiling);
             quat = ceiling.transform.rotation;
+
+            coll = ceiling.GetComponent<Collider>();
+            loc = coll.ClosestPointOnBounds(loc);
         }
         return (loc, quat);
     }
@@ -122,6 +129,9 @@ public class SpawnManager : MonoBehaviour {
         init = true;
         numPlane = Playspace.Instance.Walls.Length + 2;
         spawnCount = 0;
+
+        Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().background,
+                Playspace.Instance.Center,Quaternion.identity);
     }
 
     #endregion

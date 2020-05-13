@@ -34,32 +34,31 @@ public class Explosion : MonoBehaviour {
     }
 
     void OnDestroy() {
-        explode();
+        // disappear at the end of trail
+        // actual wall + playspace virtual wall.
+        if (gameObject.activeSelf) {
+            Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().crash,
+                gameObject.transform.position,Quaternion.identity);
+            explode();
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (!OnPlaySpaceEdge(other)) explode();
+        // grabbed by controller
+        if (other.gameObject.tag == "Collision" && gameObject.activeSelf) {
+            Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().grab,
+                gameObject.transform.position,Quaternion.identity);
+            explode();
+        }
+        // collide on furniture/wall
+        if (!OnPlaySpaceEdge(other) && gameObject.activeSelf) {
+            Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().crash,
+                gameObject.transform.position,Quaternion.identity);
+            explode();
+        } 
     }
 
     private bool OnPlaySpaceEdge(Collider other) {
-        // Collider wallColl = Playspace.Instance.WallGeometry.GetComponent<Collider>();
-
-        // if (Vector3.Distance(this.transform.position, 
-        // wallColl.ClosestPoint(this.transform.position)) <= 0.10f) {
-        //     return true;
-        // }
-        
-        // Collider floorColl = Playspace.Instance.FloorGeometry.GetComponent<Collider>();
-        // if (Vector3.Distance(this.transform.position, 
-        //     floorColl.ClosestPoint(this.transform.position)) <= 0.10f) {
-        //         return true;
-        // }
-
-        // Collider ceilingColl = Playspace.Instance.CeilingGeometry.GetComponent<Collider>();
-        // if (Vector3.Distance(this.transform.position, 
-        //     ceilingColl.ClosestPoint(this.transform.position)) <= 0.10f) {
-        //         return true;
-        // }
 
         if (time < 2f) return true;
         return false;
