@@ -720,6 +720,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Playspace
       objectReference: {fileID: 0}
+    - target: {fileID: 717008657658520716, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
+        type: 3}
+      propertyPath: floorMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f8b1fc68e26095488db3aa3e61e9a87, type: 2}
+    - target: {fileID: 717008657658520716, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
+        type: 3}
+      propertyPath: ceilingMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d05a06163b51ba34bb7211433cdcf454, type: 2}
     - target: {fileID: 717008657658520717, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
         type: 3}
       propertyPath: m_LocalPosition.x

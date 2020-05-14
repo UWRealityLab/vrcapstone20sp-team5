@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using MagicLeapTools;
+using static System.Math;
 
 
 public class SpawnManager : MonoBehaviour {
@@ -19,6 +20,7 @@ public class SpawnManager : MonoBehaviour {
     private float timer;
     private bool init = false;
     private GameObject[] planes;
+    private float xmin, xmax, zmin, zmax;
     #endregion
     
     #region Unity Methods
@@ -81,13 +83,10 @@ public class SpawnManager : MonoBehaviour {
         Instantiate(trailAndBall, Vector3.zero, Quaternion.identity);
     }
 
-    private Vector3 GetRandomPointAroundPlane(GameObject plane) {
-        float x = Random.Range(plane.transform.position.x - plane.transform.localScale.x/2,
-            plane.transform.position.x + plane.transform.localScale.x/2);
-        float y = Random.Range(plane.transform.position.y - plane.transform.localScale.y/2,
-            plane.transform.position.y + plane.transform.localScale.y/2);
-        float z = Random.Range(plane.transform.position.z - plane.transform.localScale.z/2,
-            plane.transform.position.z + plane.transform.localScale.z/2);
+    private Vector3 GetRandomPointAroundPlane() {
+        float x = Random.Range(xmin, xmax);
+        float y = Playspace.Instance.Center.y;
+        float z = Random.Range(zmin, zmax);
 
         return new Vector3(x, y, z);
     }
@@ -98,7 +97,7 @@ public class SpawnManager : MonoBehaviour {
         // ceiling/floor takes the closest point on collider bound
         Vector3 loc;
         Quaternion quat;
-        Collider coll;
+        bool inside = false;
         if (index < numPlane - 2) {
             PlayspaceWall wall = Playspace.Instance.Walls[index];
             float widthRandom = Random.Range(0f, 1f);
@@ -108,19 +107,22 @@ public class SpawnManager : MonoBehaviour {
             loc += Vector3.up*(wall.height*heightRandom);
             quat = wall.Rotation;
         } else if (index < numPlane - 1) {
-            GameObject floor = Playspace.Instance.FloorGeometry;
-            loc = GetRandomPointAroundPlane(floor);
+            loc = Playspace.Instance.Center;
+            while (!inside) {
+                loc = GetRandomPointAroundPlane();
+                inside = Playspace.Instance.Inside(loc);
+            }
+            loc.y = Playspace.Instance.FloorCenter.y;
             quat = Quaternion.Euler(90, 0, 0);
-
-            coll = floor.GetComponent<Collider>();
-            loc = coll.ClosestPointOnBounds(loc);
         } else {
-            GameObject ceiling = Playspace.Instance.CeilingGeometry;
-            loc = GetRandomPointAroundPlane(ceiling);
+            loc = Playspace.Instance.Center;
+            while (!inside) {
+                loc = GetRandomPointAroundPlane();
+                inside = Playspace.Instance.Inside(loc);
+            }
+            
+            loc.y = Playspace.Instance.CeilingCenter.y;
             quat = Quaternion.Euler(270, 0, 0);
-
-            coll = ceiling.GetComponent<Collider>();
-            loc = coll.ClosestPointOnBounds(loc);
         }
         return (loc, quat);
     }
@@ -129,6 +131,22 @@ public class SpawnManager : MonoBehaviour {
         init = true;
         numPlane = Playspace.Instance.Walls.Length + 2;
         spawnCount = 0;
+
+        // iterate thourgh the wall to get a sense of the 2d shape
+        xmin = Playspace.Instance.Walls[0].RightEdge.x;
+        xmax = xmin;
+        zmin = Playspace.Instance.Walls[0].RightEdge.z;
+        zmax = zmin;
+
+        for (int i = 1; i < Playspace.Instance.Walls.Length; i++) {
+            xmin = Min(xmin, Playspace.Instance.Walls[i].RightEdge.x);
+            xmax = Max(xmax, Playspace.Instance.Walls[i].RightEdge.x);
+
+            zmin = Min(zmin, Playspace.Instance.Walls[i].RightEdge.z);
+            zmax = Max(zmax, Playspace.Instance.Walls[i].RightEdge.z);
+
+        }
+
 
         Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().background,
                 Playspace.Instance.Center,Quaternion.identity);
