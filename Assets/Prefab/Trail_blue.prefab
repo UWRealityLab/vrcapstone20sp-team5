@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2885754059204662753}
   - component: {fileID: 7753453402064088503}
   m_Layer: 0
-  m_Name: Trail
+  m_Name: Trail_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2afa10b548b38740bea16abb91ac4b6, type: 2}
+  - {fileID: 2100000, guid: aa4d4c9ec485e9c49a6fd366fb0785cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,8 +82,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0029239766
-        value: 1
+        time: 0
+        value: 0.5
         inSlope: 0.032126136
         outSlope: 0.032126136
         tangentMode: 0
@@ -92,7 +92,7 @@ TrailRenderer:
         outWeight: 0.41348973
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.25
         inSlope: 0.0166946
         outSlope: 0.0166946
         tangentMode: 0
@@ -104,7 +104,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.12838984, a: 1}
+      key0: {r: 0, g: 0.42557812, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}

@@ -43,8 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c988cdbdb0e4b799ecb539407e0f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 4923840496249620955, guid: c948ea6b78a0b42e48e3da56aecd57c0, type: 3}
-  trail: {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
   holePrefab: {fileID: 3520255515145833166, guid: cdf80d4bea0bfe340befeb60fe22fa62,
     type: 3}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -54,3 +52,11 @@ MonoBehaviour:
   middle: {x: 0, y: 0, z: 0}
   speed: 0.5
   delay: 5
+  balls:
+  - {fileID: 7806575625156455770, guid: 54734e8f4f8cc4af2a2d992020f227d8, type: 3}
+  - {fileID: 7806575625156455770, guid: 0bc62eb78a2564cb88d2f3ab90a49b9d, type: 3}
+  - {fileID: 7806575625156455770, guid: c5187be08e2de41d4929583013e9f355, type: 3}
+  trails:
+  - {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
+  - {fileID: 7527758035986124112, guid: d7e38b909505048fa80138de73d4e946, type: 3}
+  - {fileID: 7527758035986124112, guid: e4b925450bfaa47688b1a8113d730a21, type: 3}

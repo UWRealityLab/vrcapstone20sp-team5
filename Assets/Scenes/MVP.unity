@@ -708,6 +708,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839391838}
   m_CullTransparentMesh: 0
+--- !u!1 &1050398306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1434253475793312, guid: b6af97b52b3429641aa904690975fa80,
+    type: 3}
+  m_PrefabInstance: {fileID: 1540177234}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1134472619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -724,12 +730,12 @@ PrefabInstance:
         type: 3}
       propertyPath: floorMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 4f8b1fc68e26095488db3aa3e61e9a87, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 717008657658520716, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
         type: 3}
       propertyPath: ceilingMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: d05a06163b51ba34bb7211433cdcf454, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 717008657658520717, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -949,7 +955,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1a55190557520d846be14a6080e78893, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b74b6f7c4e1f146b4e1257972230c5, type: 2}
     - target: {fileID: 114301182059694268, guid: b6af97b52b3429641aa904690975fa80,
         type: 3}
       propertyPath: m_MeshParent
@@ -959,7 +965,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MeshPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1050398306}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6af97b52b3429641aa904690975fa80, type: 3}
 --- !u!4 &1540177235 stripped

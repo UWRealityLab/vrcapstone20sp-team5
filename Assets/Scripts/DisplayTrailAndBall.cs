@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using PathCreation;
+using static System.Math;
 
 public class DisplayTrailAndBall: MonoBehaviour
 {
 
-    public GameObject ball;
-    public GameObject trail;
     public GameObject holePrefab;
     public Quaternion startRotation;
     public Quaternion endRotation;
@@ -14,6 +13,11 @@ public class DisplayTrailAndBall: MonoBehaviour
     public Vector3 middle;
     public float speed;
     public float delay;
+    public GameObject[] balls;
+    public GameObject[] trails;
+    private GameObject ball;
+    private GameObject trail;
+    private int random;
     private float travelDst;
     private VertexPath path;
     private GameObject startHole;
@@ -31,6 +35,11 @@ public class DisplayTrailAndBall: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // randomly pick a color and get the trail/ball combination for the color
+        random = Random.Range(0, Min(balls.Length, trails.Length));
+        trail = trails[random];
+        ball = balls[random];
+        
         Vector3[] points = {start, middle, end};
         path = new VertexPath(new BezierPath(points), transform);
         trail = Instantiate(trail, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
@@ -69,6 +78,8 @@ public class DisplayTrailAndBall: MonoBehaviour
             if (prevDelay >= 0) 
             {
                 ball = Instantiate(ball, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
+                // mark end of path since ball.transform.position is not accurate
+                ball.GetComponent<Explosion>().end = this.end; 
             }
             if (ball != null) 
             {

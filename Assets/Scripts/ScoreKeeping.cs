@@ -34,8 +34,8 @@ public class ScoreKeeping : MonoBehaviour
         timer += Time.deltaTime;
     }
     
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Ball") {
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.collider.tag == "Ball") {
             score++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
             float controllerHeight = transform.position.y;
@@ -57,7 +57,7 @@ public class ScoreKeeping : MonoBehaviour
             // Notify all event handler of ScoreChange
             ScoreChange?.Invoke(1, type);
 
-            Destroy(other.gameObject);  // destroy immediately to avoid second collision
+            // Destroy(other.gameObject);  // destroy immediately to avoid second collision
         }
     }
 
