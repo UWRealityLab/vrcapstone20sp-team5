@@ -57,6 +57,16 @@ public class SpawnManager : MonoBehaviour {
 
         (Vector3 startLoc, Quaternion startRot) = GetRandomFromPlane(startIndex);
         (Vector3 endLoc, Quaternion endRot) = GetRandomFromPlane(endIndex);
+
+        // make sure the whole path is not too high (both end higher than 175cm)
+        if (startLoc.y - Playspace.Instance.FloorCenter.y > 1.75f && 
+            endLoc.y - Playspace.Instance.FloorCenter.y > 1.75f) {
+
+            endIndex = startIndex;
+            while (startIndex == endIndex) endIndex = Random.Range(0, numPlane);
+            (endLoc, endRot) = GetRandomFromPlane(endIndex);
+        }
+
         float angle = Quaternion.Angle(startRot, endRot);
         while (angle < angleMin || angle > angleMax) {
             endIndex = startIndex;
@@ -71,7 +81,8 @@ public class SpawnManager : MonoBehaviour {
                         Random.Range(-middlePointRange, middlePointRange));
         int count = 0;
         while (Vector3.Angle(middleLoc - startLoc, startRot * Vector3.forward) > 90 ||
-               Vector3.Angle(middleLoc - endLoc, endRot * Vector3.forward) > 90) {
+               Vector3.Angle(middleLoc - endLoc, endRot * Vector3.forward) > 90 ||
+               !Playspace.Instance.Inside(middleLoc)) { // make sure path go into the space
             middleLoc = (startLoc + endLoc) / 2 + 
                 new Vector3(Random.Range(-middlePointRange, middlePointRange), 
                         Random.Range(-middlePointRange, middlePointRange),

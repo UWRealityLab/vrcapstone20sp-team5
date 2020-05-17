@@ -38,10 +38,10 @@ public class ScoreKeeping : MonoBehaviour
         if (collision.collider.tag == "Ball") {
             score++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
-            float controllerHeight = transform.position.y;
+            float collisionHeight = collision.contacts[0].point.y;
             
             // check ball collision position to categorize exercise
-            float height = controllerHeight - floorHeight;
+            float height = collisionHeight - floorHeight;
             ChangeType type;
             if (height > upLimit) {
                 up += 1;
@@ -56,8 +56,7 @@ public class ScoreKeeping : MonoBehaviour
 
             // Notify all event handler of ScoreChange
             ScoreChange?.Invoke(1, type);
-
-            // Destroy(other.gameObject);  // destroy immediately to avoid second collision
+            // destroy is handled in explosion script
         }
     }
 
