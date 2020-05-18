@@ -26,7 +26,61 @@
 			</header>
 
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
-		
+
+			<!-- Main -->
+			<section id="main" class="wrapper style2">
+				<div class="container">
+
+					<header class="major special">
+						<h2>Week 7 </h2>
+						<p>Improvements based on MVP</p>
+					</header>
+
+					<header>
+						<h4>What We've Accomplished</h4>
+					</header>
+					<p>This week we made several improvements based on the advices we received when demoing to other people,
+						refined the spawning algorithm and refactored code base to prepare fot the next round of updates.</p>
+					<ol>
+						<li>Refine ball spawning algorithm so that:
+							<ul><li>the ball does not appear outside of the playspace</li>
+							<li>ball path will not be too high for player to reach</li>
+						<li> ball path is less abrupt now: it wouldn't come out of the wall with a projection angle that is too small.</li>
+					</ul></li>
+						<li>Add a ring model to indicate the beginning and endding of a path</li>
+						<li>Now the path can be a curve instead of just a straight line</li>
+						<li>Add sound effect for ball spawning and despawning</li>
+						<li>Refactor code base for a clean coding environment</li>
+					</ol>
+
+					<header>
+						<h4>Past Obstacles and Working Solutions</h4>
+					</header>
+					<p> When we finished the MVP, the code is highly coupled, which is bad for future development. The score keeper
+						script used for keeping track of score is referenced by other scripts a lot, and we decided to decouple it
+						using the event/listener pattern to control the access to score keeper. </p>
+					<p> After adding start/end ring model for the path, we discovered that sometimes when
+						the start/end point of path is on the floor, it can appear out of the playspace defined.
+						This is caused by the fact that floor can be an irregular polygon, so the random point
+						in a rectangular range defined by minimum/maximum x/z coordinate of the floor may not be
+						in the placespace. We solved this by using a function provided by Magic Leap to examine whether
+						the point we have chosen is inside the region, and if not, rechoose a point. </p>
+						<p>
+
+					<header>
+						<h4>Plans for next week</h4>
+					</header>
+					<p>Moving forward, we are planning to do the following things:</p>
+					<ol>
+						<li> Replace ball/trail with better model so that it is more attracting</li>
+						<li> Add a menu for the game, so that we can have different game modes and custom settings.</li>
+						<li> Make use of the primary wall of playspace to display informations like game summary.</li>
+						<li> Use hand meshing to catch the ball.</li>
+					</ol>
+
+				</div>
+			</section>
+
 		<!-- Main -->
 		<section id="main" class="wrapper style2">
 			<div class="container">
@@ -64,28 +118,28 @@
 				</header>
 				<p>Plane Extraction: The game requires detecting planes (walls/ceiling/floor) for ball to spwan or end its path.
 					The orginal plan is to use the existing cached planes built-in to Magic Leap. However, in the case that ML
-					 mapped the whole house/apartment, all the planes woule be activated and there is no effective way to narrow 
-					down the area to a reasonable range considering that players might move from where they wake up ML and each 
-					player's room size varies. Then we try to activly use the plane extraction functionality provided by ML at 
-					the beginning of each game, but the active plane extration runs into the same problems. Eventually, Playspace 
-					by ML seems to be the best solution, where players can define their own playing area and such an area can be 
+					 mapped the whole house/apartment, all the planes woule be activated and there is no effective way to narrow
+					down the area to a reasonable range considering that players might move from where they wake up ML and each
+					player's room size varies. Then we try to activly use the plane extraction functionality provided by ML at
+					the beginning of each game, but the active plane extration runs into the same problems. Eventually, Playspace
+					by ML seems to be the best solution, where players can define their own playing area and such an area can be
 					cached for future usage.</p>
 
-				<p>Furniture Meshing: We envisioned the ball to crash on the furnitures if not catched before that. Such effect 
-					requires meshing for the furnitures, but the usual practice for collisions would cause the ball to crash on 
-					the spawning plane or something very close by (eg. a TV hanging the spawning plane), causing players to have 
-					lots of frustrations as such settings make some ball almost impossible to catch. Attempts to fix the issue 
-					including calculating the collision point distance from wall and exculding those that are close; categorize 
+				<p>Furniture Meshing: We envisioned the ball to crash on the furnitures if not catched before that. Such effect
+					requires meshing for the furnitures, but the usual practice for collisions would cause the ball to crash on
+					the spawning plane or something very close by (eg. a TV hanging the spawning plane), causing players to have
+					lots of frustrations as such settings make some ball almost impossible to catch. Attempts to fix the issue
+					including calculating the collision point distance from wall and exculding those that are close; categorize
 					the meshing with tags and condition for collision crash effect. But none of them provides a satisfying effect
-					 visually or methematically. In the end, we added a timer for each ball. If a ball is spawned and collided 
-					 with the mesh within some threshold (eg. 2 seconds), we do not crash the ball. This current working solution 
-					 guarantees that no ball would collide on spawning wall or immediately after being spawned, but still allows 
-					 the balls to collide on furnitures in the future, reducing the player frustration overall while made the 
+					 visually or methematically. In the end, we added a timer for each ball. If a ball is spawned and collided
+					 with the mesh within some threshold (eg. 2 seconds), we do not crash the ball. This current working solution
+					 guarantees that no ball would collide on spawning wall or immediately after being spawned, but still allows
+					 the balls to collide on furnitures in the future, reducing the player frustration overall while made the
 					 visual effects possible.
 				</p>
 
-				<p>Exercise Categorizing: The original exercise categorizing system utilizes the ball location to count if a 
-					ball-catch is a stretch-up or squat-down. But the ball location turned out to be very misterious, thus we 
+				<p>Exercise Categorizing: The original exercise categorizing system utilizes the ball location to count if a
+					ball-catch is a stretch-up or squat-down. But the ball location turned out to be very misterious, thus we
 					are currently using controller position instead. If the controller is sustituted in the future, other Solutions
 					 are needed for this part.</p>
 
@@ -100,7 +154,7 @@
 					<li>Ball Explosion Effects: add one more ball explosion effect to distinguish between catch and crash.</li>
 					<li>Main Menu: add a main menu for player to choose between different mode and adjust settings.</li>
 				</ol>
-				
+
 			</div>
 		</section>
 		<!-- Main -->
@@ -116,7 +170,7 @@
 					<h4>What We've Accomplished</h4>
 				</header>
 				<p>This week we divided tasks among the team members and finished
-					 those tasks for MVP. In specific, each team member is 
+					 those tasks for MVP. In specific, each team member is
 					 responsible for the following:</p>
 				<ol>
 					<li>Ryan: Meshing/Environment setup and spawning balls from walls					</li>
@@ -132,15 +186,15 @@
 				<ol>
 					<li>Path/Ball Spawn and Collision Effects</li>
 					<a href="#" class="demo1"><img src="images/path&collision.gif" alt="" /></a>
-					
+
 					<li>User Faciliating System: Score & Scan Texts</li>
 					<a href="#" class="demo2"><img src="images/score&scan.gif" alt="" /></a>
-					
+
 					<li>User Faciliating System: Session Summary</li>
 					<a href="#" class="demo3"><img src="images/summary.gif" alt="" /></a>
-				
+
 				</ol>
-				
+
 
 				<header>
 					<h4>Code Update</h4>
@@ -151,7 +205,7 @@
 					<h4>Plans for Next Week</h4>
 				</header>
 				<p>Now that we have all the parts for MVP, we just need to incorporate those parts together to make a whole game.</p>
-				
+
 
 				<header>
 					<h4>Help Needed and Blocked Progress</h4>
@@ -162,7 +216,7 @@
 					<li>Repo does not work for some teammates (asset missing, build failure); </li>
 					<li>One teammate has difficulty connect simulator to Unity and has not received ML device yet.</li>
 				</ol>
-				
+
 			</div>
 		</section>
 		<!-- Main -->
@@ -179,9 +233,9 @@
 				</header>
 				<p>This week we connected the Magic Leaps to our computers
 					and started learning how to develop for the device.
-					We watched a tutorial to get started. 
+					We watched a tutorial to get started.
 					Learning how to develop for the magic leap before
-					starting our actual app will certainly make development 
+					starting our actual app will certainly make development
 					faster later on</p>
 
 				<header>
@@ -209,7 +263,7 @@
 					<h4>Help Needed and Blocked Progress</h4>
 				</header>
 				<p>The only block currently is that one of the team members is still waiting for the magic leap to arrive, making it harder to develop. Hopefully the device will arrive very soon </p>
-				
+
 			</div>
 		</section>
 		<section id="main" class="wrapper">
@@ -225,10 +279,10 @@
 				<header>
 					<h4>What We've Accomplished</h4>
 				</header>
-				<p>This week we refined the project idea in the Product Requirements Document and released 
-					the initial project pitch video explaining our ideas in the simple graphic/scratch form. 
-					The weekly milestones, evaluation metrics, and team member responsibilities are also refined 
-					for the next 7 weeks to ensure a smooth development cycle. Refer to the New Release section 
+				<p>This week we refined the project idea in the Product Requirements Document and released
+					the initial project pitch video explaining our ideas in the simple graphic/scratch form.
+					The weekly milestones, evaluation metrics, and team member responsibilities are also refined
+					for the next 7 weeks to ensure a smooth development cycle. Refer to the New Release section
 					for more details.</p>
 
 				<header>
@@ -287,7 +341,7 @@
 					<h4>Help Needed and Blocked Progress</h4>
 				</header>
 				<p>We currently have nothing blocking us, although we anticipate getting help from Joerg in order to help us through the initial setup and the various input modalities (gestures, control, etc.). </p>
-				
+
 			</div>
 		</section>
 
