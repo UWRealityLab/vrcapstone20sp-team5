@@ -11,36 +11,55 @@ public class SpawnManager : MonoBehaviour {
     public float angleMin;
     public float angleMax;
     public GameObject trailAndBall;
+    public ScoreKeeping scorekeeper;
     #endregion
     
     #region Private Variables
     private UIManager UIMnger;
     private int numPlane;
-    private int spawnCount;
     private float timer;
-    private bool init = false;
     private GameObject[] planes;
     private float xmin, xmax, zmin, zmax;
+    private AudioSource sound;
     #endregion
     
     #region Unity Methods
     private void Update() {
         timer += Time.deltaTime;
-
-        if (init) {
-            if (timer > SpawnFrequency) {
-                timer = 0.0f;
-                RandomSpawn();
-                spawnCount++;
-                UIMnger.SetSpawnCountText(spawnCount);
-            }
+        if (timer > SpawnFrequency) {
+            timer = 0.0f;
+            RandomSpawn();
+            scorekeeper.spawnCount++;
+            UIMnger.SetSummaryText();
         }
     }
 
-    private void Awake() {
-        //hooks:
-        Playspace.Instance.OnCompleted.AddListener(HandleCompleted);
+    private void OnEnable() {
+        timer = 0.0f;
+        numPlane = Playspace.Instance.Walls.Length + 2;
         UIMnger = GetComponent<UIManager>();
+
+        // iterate thourgh the wall to get a sense of the 2d shape
+        xmin = Playspace.Instance.Walls[0].RightEdge.x;
+        xmax = xmin;
+        zmin = Playspace.Instance.Walls[0].RightEdge.z;
+        zmax = zmin;
+
+        for (int i = 1; i < Playspace.Instance.Walls.Length; i++) {
+            xmin = Min(xmin, Playspace.Instance.Walls[i].RightEdge.x);
+            xmax = Max(xmax, Playspace.Instance.Walls[i].RightEdge.x);
+
+            zmin = Min(zmin, Playspace.Instance.Walls[i].RightEdge.z);
+            zmax = Max(zmax, Playspace.Instance.Walls[i].RightEdge.z);
+
+        }
+
+        sound = Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().background,
+                Playspace.Instance.Center,Quaternion.identity);
+    }
+
+    private void OnDisable() {
+        Destroy(sound);
     }
     #endregion
     
@@ -137,31 +156,5 @@ public class SpawnManager : MonoBehaviour {
         }
         return (loc, quat);
     }
-
-    private void HandleCompleted() {
-        init = true;
-        numPlane = Playspace.Instance.Walls.Length + 2;
-        spawnCount = 0;
-
-        // iterate thourgh the wall to get a sense of the 2d shape
-        xmin = Playspace.Instance.Walls[0].RightEdge.x;
-        xmax = xmin;
-        zmin = Playspace.Instance.Walls[0].RightEdge.z;
-        zmax = zmin;
-
-        for (int i = 1; i < Playspace.Instance.Walls.Length; i++) {
-            xmin = Min(xmin, Playspace.Instance.Walls[i].RightEdge.x);
-            xmax = Max(xmax, Playspace.Instance.Walls[i].RightEdge.x);
-
-            zmin = Min(zmin, Playspace.Instance.Walls[i].RightEdge.z);
-            zmax = Max(zmax, Playspace.Instance.Walls[i].RightEdge.z);
-
-        }
-
-
-        Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().background,
-                Playspace.Instance.Center,Quaternion.identity);
-    }
-
     #endregion
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ball
   - Collision
+  - play
+  - settings
+  - help
   layers:
   - Default
   - TransparentFX

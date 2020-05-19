@@ -15,6 +15,9 @@ public class ScoreKeeping : MonoBehaviour
     
     [HideInInspector]
     public int down;
+    
+    [HideInInspector]
+    public int spawnCount;
 
     [HideInInspector]
     public float timer;
@@ -37,6 +40,7 @@ public class ScoreKeeping : MonoBehaviour
     private void OnCollisionEnter(Collision collision) {
         if (collision.collider.tag == "Ball") {
             score++;
+            spawnCount++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
             float collisionHeight = collision.contacts[0].point.y;
             
@@ -66,6 +70,7 @@ public class ScoreKeeping : MonoBehaviour
         medium = 0;
         down = 0;
         timer = 0;
+        spawnCount = 0;
         ScoreChange?.Invoke(-1, ChangeType.Reset);
     }
 }
