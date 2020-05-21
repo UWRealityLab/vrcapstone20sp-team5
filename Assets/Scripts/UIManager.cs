@@ -18,12 +18,13 @@ public class UIManager : MonoBehaviour {
     public BeamController beamController;   
     public ScoreKeeping scoreKeeper;
     public enum WallStat {Empty, Summary, Setting, Help, Menu};
-    public enum SettingType {Freq, BGM, Sound, Path};
+    public enum SettingType {Freq, BGM, Sound, Path, Height};
     #endregion
     
     #region Private Variables
     private SpawnManager spawnMngr;
     private AudioManager audioManager;
+    private ScoreKeeping scoreKeeping;
     private MLInput.Controller _control;
     private WallStat wallStat;
     private bool pathOn;
@@ -33,7 +34,8 @@ public class UIManager : MonoBehaviour {
     private void Awake() {
         MLInput.Start();
         spawnMngr = GetComponent<SpawnManager>();
-        audioManager = GameObject.Find("AudioManager").GetComponentInChildren<AudioManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        scoreKeeping = GameObject.Find("[Content]/Controller").GetComponent<ScoreKeeping>();
         _control = MLInput.GetController(MLInput.Hand.Left);
 
         scoreText.enabled = false;
@@ -46,6 +48,7 @@ public class UIManager : MonoBehaviour {
         canvas.SetActive(false);
         settings.SetActive(false);
 
+        // update setting text to reflect current settings
         pathOn = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails[0].activeSelf;
 
         foreach(SettingType type in Enum.GetValues(typeof(SettingType))) 
@@ -142,17 +145,15 @@ public class UIManager : MonoBehaviour {
             float newValue = Min(audioManager.grab.volume + 0.1f, 1f);
             audioManager.grab.volume = newValue;
             audioManager.crash.volume = newValue;
-            GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
-            foreach(GameObject obj in trails) obj.GetComponent<AudioSource>().volume = newValue;
+            audioManager.spawn.volume = newValue;
             
             SetSettingText(SettingType.Sound);
         } else if (tag == "sound_minus") {
             float newValue = Max(audioManager.grab.volume - 0.1f, 0f);
             audioManager.grab.volume = newValue;
             audioManager.crash.volume = newValue;
-            GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
-            foreach(GameObject obj in trails) obj.GetComponent<AudioSource>().volume = newValue;
-            
+            audioManager.spawn.volume = newValue;
+
             SetSettingText(SettingType.Sound);
         } else if (tag == "path_control") {
             GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
@@ -164,6 +165,12 @@ public class UIManager : MonoBehaviour {
                 pathOn = true;
             }
             SetSettingText(SettingType.Path);
+        } else if (tag == "height_plus") {
+            scoreKeeping.upLimit = Min(scoreKeeping.upLimit + 0.01f, 3f);
+            SetSettingText(SettingType.Height);
+        } else if (tag == "height_minus") {
+            scoreKeeping.upLimit = Max(scoreKeeping.upLimit - 0.01f, 0f);
+            SetSettingText(SettingType.Height);
         }
         Debug.Log("Option selected" + tag);
     }
@@ -182,6 +189,9 @@ public class UIManager : MonoBehaviour {
         } else if (type == SettingType.Path) {
             value = settings.transform.Find("BallPathControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text =  pathOn ? "ON" : "OFF";
+        } else if (type == SettingType.Height) {
+            value = settings.transform.Find("HeightControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  (scoreKeeping.upLimit*100).ToString("F0");
         }
     }
 

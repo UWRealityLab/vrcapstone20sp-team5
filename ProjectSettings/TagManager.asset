@@ -16,6 +16,8 @@ TagManager:
   - BGM_minus
   - sound_plus
   - sound_minus
+  - height_plus
+  - height_minus
   layers:
   - Default
   - TransparentFX

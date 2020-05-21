@@ -45,6 +45,8 @@ public class DisplayTrailAndBall: MonoBehaviour
         trail = Instantiate(trail, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
         startHole = Instantiate(holePrefab, start, startRotation);
         endHole = Instantiate(holePrefab, end, endRotation);
+        Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().spawn,
+                start,Quaternion.identity);
         travelDst = 0;
     }
 
