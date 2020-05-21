@@ -18,16 +18,18 @@ public class UIManager : MonoBehaviour {
     public BeamController beamController;   
     public ScoreKeeping scoreKeeper;
     public enum WallStat {Empty, Summary, Setting, Help, Menu};
-    public enum SettingType {Freq, BGM, Sound, Path, Height};
+    public enum SettingType {Freq, Speed, BGM, Sound, Path, Mesh, Height};
     #endregion
     
     #region Private Variables
     private SpawnManager spawnMngr;
     private AudioManager audioManager;
     private ScoreKeeping scoreKeeping;
+    private DisplayTrailAndBall trailAndBall;
     private MLInput.Controller _control;
     private WallStat wallStat;
     private bool pathOn;
+    private bool meshOn;
     #endregion
     
     #region Unity Methods
@@ -36,6 +38,7 @@ public class UIManager : MonoBehaviour {
         spawnMngr = GetComponent<SpawnManager>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         scoreKeeping = GameObject.Find("[Content]/Controller").GetComponent<ScoreKeeping>();
+        trailAndBall = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>();
         _control = MLInput.GetController(MLInput.Hand.Left);
 
         scoreText.enabled = false;
@@ -49,7 +52,11 @@ public class UIManager : MonoBehaviour {
         settings.SetActive(false);
 
         // update setting text to reflect current settings
-        pathOn = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails[0].activeSelf;
+        pathOn = trailAndBall.trails[0].activeSelf;
+        if (GameObject.Find("[Content]/MLSpatialMapper/Original").GetComponent<Renderer>().material.mainTexture == null)
+            meshOn = false;
+        else meshOn = true;
+        
 
         foreach(SettingType type in Enum.GetValues(typeof(SettingType))) 
             SetSettingText(type);
@@ -171,6 +178,22 @@ public class UIManager : MonoBehaviour {
         } else if (tag == "height_minus") {
             scoreKeeping.upLimit = Max(scoreKeeping.upLimit - 0.01f, 0f);
             SetSettingText(SettingType.Height);
+        } else if (tag == "speed_plus") {
+            trailAndBall.speed =  Min(trailAndBall.speed + 0.1f, 3f);
+            SetSettingText(SettingType.Speed);
+        } else if (tag == "speed_minus") {
+            trailAndBall.speed =  Max(trailAndBall.speed - 0.1f, 0f);
+            SetSettingText(SettingType.Speed);
+        } else if (tag == "mesh_control") {
+            if (meshOn) {
+                GameObject.Find("[Content]/MLSpatialMapper/Original").GetComponent<Renderer>().material.mainTexture = null;
+                meshOn = false;
+            } else {
+                Texture meshTexture = Resources.Load<Texture>("GradientLine");
+                GameObject.Find("[Content]/MLSpatialMapper/Original").GetComponent<Renderer>().material.mainTexture = meshTexture;
+                meshOn = true;
+            }
+            SetSettingText(SettingType.Mesh);
         }
         Debug.Log("Option selected" + tag);
     }
@@ -192,6 +215,12 @@ public class UIManager : MonoBehaviour {
         } else if (type == SettingType.Height) {
             value = settings.transform.Find("HeightControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text =  (scoreKeeping.upLimit*100).ToString("F0");
+        } else if (type == SettingType.Speed) {
+            value = settings.transform.Find("SpeedControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  (trailAndBall.speed).ToString("F1");
+        } else if (type == SettingType.Mesh) {
+            value = settings.transform.Find("MeshVisualControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  meshOn ? "ON" : "OFF";
         }
     }
 

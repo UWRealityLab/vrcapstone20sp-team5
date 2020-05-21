@@ -18,6 +18,9 @@ TagManager:
   - sound_minus
   - height_plus
   - height_minus
+  - speed_plus
+  - speed_minus
+  - mesh_control
   layers:
   - Default
   - TransparentFX
