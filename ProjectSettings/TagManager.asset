@@ -9,6 +9,13 @@ TagManager:
   - play
   - settings
   - help
+  - path_control
+  - freq_plus
+  - freq_minus
+  - BGM_plus
+  - BGM_minus
+  - sound_plus
+  - sound_minus
   layers:
   - Default
   - TransparentFX

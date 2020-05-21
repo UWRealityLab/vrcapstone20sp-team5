@@ -157,4 +157,8 @@ public class SpawnManager : MonoBehaviour {
         return (loc, quat);
     }
     #endregion
+    public void ChangeSpawnFrequency(float frequency)
+    {  
+        SpawnFrequency = frequency;
+    }
 }

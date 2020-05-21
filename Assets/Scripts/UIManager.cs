@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 using MagicLeapTools;
+using static System.Math;
+using System;
 
 public class UIManager : MonoBehaviour {
 
@@ -16,18 +18,22 @@ public class UIManager : MonoBehaviour {
     public BeamController beamController;   
     public ScoreKeeping scoreKeeper;
     public enum WallStat {Empty, Summary, Setting, Help, Menu};
+    public enum SettingType {Freq, BGM, Sound, Path};
     #endregion
     
     #region Private Variables
     private SpawnManager spawnMngr;
+    private AudioManager audioManager;
     private MLInput.Controller _control;
     private WallStat wallStat;
+    private bool pathOn;
     #endregion
     
     #region Unity Methods
     private void Awake() {
         MLInput.Start();
         spawnMngr = GetComponent<SpawnManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponentInChildren<AudioManager>();
         _control = MLInput.GetController(MLInput.Hand.Left);
 
         scoreText.enabled = false;
@@ -39,6 +45,11 @@ public class UIManager : MonoBehaviour {
         menu.SetActive(false);
         canvas.SetActive(false);
         settings.SetActive(false);
+
+        pathOn = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails[0].activeSelf;
+
+        foreach(SettingType type in Enum.GetValues(typeof(SettingType))) 
+            SetSettingText(type);
 
         Playspace.Instance.OnCompleted.AddListener(OnPlayspaceComplete);
         MLInput.OnControllerButtonUp += OnButtonUp;
@@ -113,8 +124,65 @@ public class UIManager : MonoBehaviour {
             wallStat = WallStat.Help;
             helpText.enabled = true;
             SetHelpText();
+        } 
+        // setting page interactions
+        if (tag == "freq_plus") {
+            spawnMngr.SpawnFrequency = Min(spawnMngr.SpawnFrequency + 0.5f, 8f);
+            SetSettingText(SettingType.Freq);
+        } else if (tag == "freq_minus") {
+            spawnMngr.SpawnFrequency = Max(spawnMngr.SpawnFrequency - 0.5f, 1f);
+            SetSettingText(SettingType.Freq);
+        } else if (tag == "BGM_plus") {
+            audioManager.background.volume = Min(audioManager.background.volume + 0.1f, 1f);
+            SetSettingText(SettingType.BGM);
+        } else if (tag == "BGM_minus") {
+            audioManager.background.volume = Max(audioManager.background.volume - 0.1f, 0f);
+            SetSettingText(SettingType.BGM);
+        } else if (tag == "sound_plus") {
+            float newValue = Min(audioManager.grab.volume + 0.1f, 1f);
+            audioManager.grab.volume = newValue;
+            audioManager.crash.volume = newValue;
+            GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
+            foreach(GameObject obj in trails) obj.GetComponent<AudioSource>().volume = newValue;
+            
+            SetSettingText(SettingType.Sound);
+        } else if (tag == "sound_minus") {
+            float newValue = Max(audioManager.grab.volume - 0.1f, 0f);
+            audioManager.grab.volume = newValue;
+            audioManager.crash.volume = newValue;
+            GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
+            foreach(GameObject obj in trails) obj.GetComponent<AudioSource>().volume = newValue;
+            
+            SetSettingText(SettingType.Sound);
+        } else if (tag == "path_control") {
+            GameObject[] trails = spawnMngr.trailAndBall.GetComponent<DisplayTrailAndBall>().trails;
+            if (pathOn) {
+                foreach(GameObject obj in trails) obj.SetActive(false);
+                pathOn = false;
+            } else {
+                foreach(GameObject obj in trails) obj.SetActive(true);
+                pathOn = true;
+            }
+            SetSettingText(SettingType.Path);
         }
-        Debug.Log("Opeion selected" + tag);
+        Debug.Log("Option selected" + tag);
+    }
+
+    private void SetSettingText(SettingType type) {
+        Text value;
+        if (type == SettingType.Freq) {
+            value = settings.transform.Find("FreqControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text = spawnMngr.SpawnFrequency.ToString("F2");
+        } else if (type == SettingType.BGM) {
+            value = settings.transform.Find("BGMControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  (audioManager.background.volume*100).ToString("F0");
+        } else if (type == SettingType.Sound) {
+            value = settings.transform.Find("SoundEffectControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  (audioManager.grab.volume*100).ToString("F0");
+        } else if (type == SettingType.Path) {
+            value = settings.transform.Find("BallPathControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  pathOn ? "ON" : "OFF";
+        }
     }
 
     private void OnScoreChange(int change, ScoreKeeping.ChangeType type) {
@@ -159,7 +227,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void SetHelpText() {
-        helpText.text = "No bb, catch the ball. In game tape home to return to main menu, press bumper to reset score.";
+        helpText.text = "No bb, catch the ball. In game tap home to return to main menu, press bumper to reset score.";
     }
     #endregion
 }
