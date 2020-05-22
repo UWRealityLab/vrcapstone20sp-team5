@@ -24,7 +24,7 @@ public class Explosion : MonoBehaviour {
 
     private void OnCollisionEnter(Collision coll) {
         // grabbed by controller
-        if (coll.collider.tag == "Collision" && gameObject.activeSelf) {
+        if (coll.collider.tag == "GameController" && gameObject.activeSelf) {
             gameObject.SetActive(false);
             collided = true;
             GrabExplode(coll.contacts[0].point);

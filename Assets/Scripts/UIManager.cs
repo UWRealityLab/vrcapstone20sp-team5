@@ -107,8 +107,9 @@ public class UIManager : MonoBehaviour {
         canvas.SetActive(true);
         menu.SetActive(true);
         PlayspaceWall wall = Playspace.Instance.Walls[Playspace.Instance.PrimaryWall];
-        canvas.transform.position = wall.Center;
+        canvas.transform.position = wall.Center + Vector3.up * .3f;
         canvas.transform.rotation = Quaternion.LookRotation(wall.Back, Vector3.up);
+        canvas.transform.Translate(Vector3.back * .1f); // pull the canvas up a bit to avoid coverup
         //SetPositionAndRotation(wall.Center, wall.Rotation);
         beamController.enabled = true;
         wallStat = WallStat.Menu;
