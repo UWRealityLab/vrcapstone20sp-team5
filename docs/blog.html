@@ -33,39 +33,69 @@
 
 					<header class="major special">
 						<h2>Week 8 </h2>
-						<p>Better graphics and a menu system</p>
+						<p>Visual and UI System</p>
 					</header>
 
 					<header>
 						<h4>What We've Accomplished</h4>
 					</header>
-					<p>This week we made improvements to refine how our game looks and feel like based on the feedback we received </p>
+					<p>This week we refined the game logistics, created a menu, and updated the game visual effects. </p>
 					<ol>
-						<li>Changed the model for our ball to make the game look more apealing
-						<li> Changed the path to look more appealing as well</li>
-						<li> Changed the ball's animation on collision in order to take less resouces</li>
-						<li>Added automatic room recognition so users can just comfirm that this is the area they want to play in</li>
-						<li>Added a menu system with multiple settings the user can change</li>
+						<li>Visual Effects: introduced particle system for ball and 
+							explosion effects. Changed material for path.</li>
+						<li>Added Menu and Game Summary on the Primary Wall</li>
 						<li>Used the primary wall to display the menu and game summary</li>
-						<li>Demoed in open house</li>
+						<li>Introduced Settings: allowed players to turn the path or mesh visuals on/off, 
+							change BGM and sound effect volume, and adjust spawn rate and ball speed.</li>
+						<li>Introduced Mesh Visual: added blue gradient indicator at the center of the viewp
+							to indicate the furniture/wall mesh, could be turned on/off in the settings.</li>
 					</ol>
+
+					<header>
+						<h4>Past Obstacles and Working Solutions</h4>
+					</header>
+					<p> The meshing system in the previous versions uses a black material which is claimed
+						to be transparent in ML's display. However, after several tryouts, we figured that
+						there's usually a black shadow on the meshing. The black color and occlution behavior
+						are not ideal for our game environment. So we updated the material with a transparent 
+						base with blue pattern. This way the players could see the mesh visual in the center 
+						of their view to predict ball collision and could also turn off the function at their
+						choice.
+					</p>
+					<p> The UI system also posed great obstacles to the development process. In order to develop
+						the main menu, the game logistics need to be clear and modular enough. Furthermore, 
+						the menu interaction is tricky as we need to combine controller behavior, raycasting, and
+						custom UI elements together to trigger appropiate events. Some of the UI elements is 
+						particularly harder to manipulate in such a system, such as a slider. So we chose buttons
+						for most of the UI elements, even for numerical values - clicking a button will just add 
+						or subtract certain value with a ceiling/floor in that case. In addition, the position of 
+						the menu involves a bit of consideration too. We face several problems regarding menu 
+						placement: 1) it is possible to be blocked by the mesh visual of the wall, 2) when the wall
+						has decorations (such as frames, obstructive fire place, etc), the mesh may also block 
+						the menu. After experiments and discussion, we made the following adjustments: 1) move the 
+						UI canvas out from the wall for 10cm as MagicLeap did in their example, 2) prompt the players 
+						to choose a wall with flat surface in the center, 3) make the bottons in a slightly smaller 
+						but reasonable size so that the overall size of the menu/setting items is reasonable for 
+						the player to find a wall with those requirements.
+					</p>
+						
 
 					<header>
 						<h4>Plans for next week</h4>
 					</header>
 					<p>Moving forward, we are planning to do the following things:</p>
 					<ol>
-						<li> Further refine our current game and make it look even better</li>
-						<li> Allow users to post their scores on social media</li>
-						<li> Figuring out how to make the audio show up on demo</li>
-						<li> (Taking in consideration) Adding new game mode</li>
+						<li> Explore Different Game Modes</li>
+						<li> Explore Powerups</li>
+						<li> Considering adding different exercises (maybe make the ball bounce?)</li>
+						<li> Explore Visual Indicators</li>
 					</ol>
 
 				</div>
 			</section>
 
 			<!-- Main -->
-			<section id="main" class="wrapper style2">
+			<section id="main" class="wrapper">
 				<div class="container">
 
 					<header class="major special">
