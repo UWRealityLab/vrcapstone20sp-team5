@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour {
     public Text summaryText;
     public Text statusText;
     public Text helpText;
+    public Text meshingPrompt; 
     public GameObject menu;
     public GameObject canvas;
     public GameObject settings;
@@ -62,6 +63,7 @@ public class UIManager : MonoBehaviour {
             SetSettingText(type);
 
         Playspace.Instance.OnCompleted.AddListener(OnPlayspaceComplete);
+        Playspace.Instance.OnCleared.AddListener(OnPlayspaceClear);
         MLInput.OnControllerButtonUp += OnButtonUp;
         scoreKeeper.ScoreChange += OnScoreChange;
         beamController.OptionSelected += OnOptionSelected;
@@ -78,6 +80,9 @@ public class UIManager : MonoBehaviour {
     #endregion
     
     #region Private Methods
+    private void OnPlayspaceClear() {
+        meshingPrompt.enabled = false;
+    }
 
     /// OnButtonUp
     /// Button event - when bumper is tapped: show summary
