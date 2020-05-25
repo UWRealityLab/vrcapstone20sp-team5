@@ -195,6 +195,10 @@ public class UIManager : MonoBehaviour {
                 meshOn = true;
             }
             SetSettingText(SettingType.Mesh);
+        } else if (tag == "playspace_reset") {
+            settings.SetActive(false);
+            beamController.enabled = false;
+            Playspace.Instance.Rebuild();
         }
         Debug.Log("Option selected" + tag);
     }

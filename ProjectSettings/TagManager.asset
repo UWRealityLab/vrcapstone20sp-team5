@@ -20,6 +20,7 @@ TagManager:
   - speed_plus
   - speed_minus
   - mesh_control
+  - playspace_reset
   layers:
   - Default
   - TransparentFX
