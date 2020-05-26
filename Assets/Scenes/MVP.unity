@@ -4177,7 +4177,7 @@ MonoBehaviour:
   summaryText: {fileID: 374424639}
   statusText: {fileID: 839391840}
   helpText: {fileID: 562924016}
-  meshingPrompt: {fileID: 0}
+  meshingPrompt: {fileID: 1484390761}
   menu: {fileID: 640060529}
   canvas: {fileID: 840626662}
   settings: {fileID: 724494472}
