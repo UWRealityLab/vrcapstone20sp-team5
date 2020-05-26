@@ -5,7 +5,8 @@ using static System.Math;
 public class DisplayTrailAndBall: MonoBehaviour
 {
 
-    public GameObject holePrefab;
+    public GameObject holePrefabStart;
+    public GameObject holePrefabEnd;
     public Quaternion startRotation;
     public Quaternion endRotation;
     public Vector3 start;
@@ -43,10 +44,8 @@ public class DisplayTrailAndBall: MonoBehaviour
         Vector3[] points = {start, middle, end};
         path = new VertexPath(new BezierPath(points), transform);
         trail = Instantiate(trail, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
-        startHole = Instantiate(holePrefab, start, startRotation);
-        endHole = Instantiate(holePrefab, end, endRotation);
-        Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().spawn,
-                start,Quaternion.identity);
+        startHole = Instantiate(holePrefabStart, start, startRotation);
+        endHole = Instantiate(holePrefabEnd, end, endRotation);
         travelDst = 0;
     }
 
@@ -82,6 +81,8 @@ public class DisplayTrailAndBall: MonoBehaviour
                 ball = Instantiate(ball, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
                 // mark end of path since ball.transform.position is not accurate
                 ball.GetComponent<Explosion>().end = this.end; 
+                Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().spawn,
+                    start,Quaternion.identity);
             }
             if (ball != null) 
             {

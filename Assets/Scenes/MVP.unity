@@ -3484,6 +3484,11 @@ PrefabInstance:
       propertyPath: ceilingMaterial
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 717008657658520716, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
+        type: 3}
+      propertyPath: maxPlaneDepthTest
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 717008657658520717, guid: 86e872bb2ae0ce345a0ce594d4e23daf,
         type: 3}
       propertyPath: m_LocalPosition.x

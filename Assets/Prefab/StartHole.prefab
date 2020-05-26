@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 3520255515145833202}
   - component: {fileID: 3520255515145833203}
   - component: {fileID: 3520255515145833200}
-  - component: {fileID: 1140039034369533747}
   m_Layer: 0
-  m_Name: RaycastVisualizer
+  m_Name: StartHole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5373f14d0786351408297e02acf409b9, type: 2}
+  - {fileID: 2100000, guid: 72f8f065064514bdcb36a2d81d1142ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,17 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1140039034369533747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3520255515145833166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20b0f7815adafcd448fd100e8527fd18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raycast: {fileID: 0}
-  _scaleWhenClose: 1

@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c988cdbdb0e4b799ecb539407e0f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holePrefab: {fileID: 3520255515145833166, guid: cdf80d4bea0bfe340befeb60fe22fa62,
+  holePrefabStart: {fileID: 3520255515145833166, guid: f92321f33cc014505a9357a2bef2e9d1,
+    type: 3}
+  holePrefabEnd: {fileID: 202623278010964060, guid: f4d4c244214a24f18806c00a44c9cafa,
     type: 3}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
