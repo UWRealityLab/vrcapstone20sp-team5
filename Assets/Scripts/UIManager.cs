@@ -269,6 +269,9 @@ public class UIManager : MonoBehaviour {
             default:
                 break;
         }
+        if (type != ScoreKeeping.ChangeType.Reset) {
+            _control.StartFeedbackPatternVibe(MLInput.Controller.FeedbackPatternVibe.Buzz, MLInput.Controller.FeedbackIntensity.Medium);
+        }
         SetScoreText();
         SetSummaryText(spawnMngr.timedMode, spawnMngr.timeLeft);
     }
