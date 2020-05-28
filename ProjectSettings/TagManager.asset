@@ -21,6 +21,9 @@ TagManager:
   - speed_minus
   - mesh_control
   - playspace_reset
+  - duration_plus
+  - duration_minus
+  - gamemode
   layers:
   - Default
   - TransparentFX

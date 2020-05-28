@@ -12,6 +12,9 @@ public class SpawnManager : MonoBehaviour {
     public float angleMax;
     public GameObject trailAndBall;
     public ScoreKeeping scorekeeper;
+    public bool timedMode;
+    public int timeLimit;
+    public float timeLeft;
     #endregion
     
     #region Private Variables
@@ -26,16 +29,20 @@ public class SpawnManager : MonoBehaviour {
     #region Unity Methods
     private void Update() {
         timer += Time.deltaTime;
+        timeLeft -= Time.deltaTime;
         if (timer > SpawnFrequency) {
             timer = 0.0f;
-            RandomSpawn();
-            scorekeeper.spawnCount++;
-            UIMnger.SetSummaryText();
+            if (!timedMode || (timedMode && timeLeft > 0)) {
+                RandomSpawn();
+                scorekeeper.spawnCount++;
+            }
         }
+        UIMnger.SetSummaryText(timedMode, timeLeft);
     }
 
     private void OnEnable() {
         timer = 0.0f;
+        timeLeft = timeLimit;
         numPlane = Playspace.Instance.Walls.Length + 2;
         UIMnger = GetComponent<UIManager>();
 

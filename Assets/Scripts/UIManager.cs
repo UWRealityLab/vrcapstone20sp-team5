@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
     public BeamController beamController;   
     public ScoreKeeping scoreKeeper;
     public enum WallStat {Empty, Summary, Setting, Help, Menu};
-    public enum SettingType {Freq, Speed, BGM, Sound, Path, Mesh, Height};
+    public enum SettingType {Freq, Speed, BGM, Sound, Path, Mesh, Height, GameMode, Duration};
     #endregion
     
     #region Private Variables
@@ -204,6 +204,17 @@ public class UIManager : MonoBehaviour {
             settings.SetActive(false);
             beamController.enabled = false;
             Playspace.Instance.Rebuild();
+        } else if (tag == "gamemode") {
+            spawnMngr.timedMode = !spawnMngr.timedMode;
+            SetSettingText(SettingType.GameMode);
+        } else if (tag == "duration_plus") {
+            spawnMngr.timeLimit += 30;
+            SetSettingText(SettingType.Duration);
+        } else if (tag == "duration_minus") {
+            if (spawnMngr.timeLimit >= 60) {
+                spawnMngr.timeLimit -= 30;
+            }
+            SetSettingText(SettingType.Duration);
         }
         Debug.Log("Option selected" + tag);
     }
@@ -231,6 +242,12 @@ public class UIManager : MonoBehaviour {
         } else if (type == SettingType.Mesh) {
             value = settings.transform.Find("MeshVisualControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text =  meshOn ? "ON" : "OFF";
+        } else if (type == SettingType.GameMode) {
+            value = settings.transform.Find("GameMode/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text = spawnMngr.timedMode ? "Timed" : "Untimed";
+        } else if (type == SettingType.Duration) {
+            value = settings.transform.Find("GameDuration/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text = (spawnMngr.timeLimit / 60f).ToString("F1");
         }
     }
 
@@ -247,12 +264,13 @@ public class UIManager : MonoBehaviour {
                 break;
             case ScoreKeeping.ChangeType.Reset:
                 SetStatusText("");
+                spawnMngr.timeLeft = spawnMngr.timeLimit;
                 break;
             default:
                 break;
         }
         SetScoreText();
-        SetSummaryText();
+        SetSummaryText(spawnMngr.timedMode, spawnMngr.timeLeft);
     }
     #endregion
 
@@ -265,14 +283,24 @@ public class UIManager : MonoBehaviour {
         scoreText.text = "Score: " + scoreKeeper.score.ToString();
     }
 
-    public void SetSummaryText() {
-        summaryText.text = "Summary:\n" 
-        + "Spawned: " + scoreKeeper.spawnCount.ToString() + ";\n"
-        + "Score: " + scoreKeeper.score.ToString() + ";\n" 
-        + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
-        + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
-        + "Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + "mins;\n"
-        + "Press Bumper to start a new session";
+    public void SetSummaryText(bool timed, float timeLeft) {
+        if (timed && timeLeft > 0) {
+            summaryText.fontSize = 60;
+            summaryText.alignment = TextAnchor.MiddleCenter;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeft);
+            summaryText.text =  TimeSpan.FromSeconds(timeLeft).ToString(@"mm\:ss");
+        } else {
+            summaryText.fontSize = 20;
+            summaryText.alignment = TextAnchor.MiddleLeft;
+            summaryText.text = "Summary:\n" 
+                + "Spawned: " + scoreKeeper.spawnCount.ToString() + ";\n"
+                + "Score: " + scoreKeeper.score.ToString() + ";\n" 
+                + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
+                + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
+                + (timed ? ("Session Time: " + (spawnMngr.timeLimit/60).ToString("F1") + " minutes;\n") : 
+                    ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes;\n"))
+                + "Press Bumper to start a new session";
+        }
     }
 
     public void SetHelpText() {
