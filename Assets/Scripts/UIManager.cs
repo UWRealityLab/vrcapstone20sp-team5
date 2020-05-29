@@ -244,7 +244,7 @@ public class UIManager : MonoBehaviour {
             value.text =  meshOn ? "ON" : "OFF";
         } else if (type == SettingType.GameMode) {
             value = settings.transform.Find("GameMode/TextField/Value").GetComponent<UnityEngine.UI.Text>();
-            value.text = spawnMngr.timedMode ? "Timed" : "Untimed";
+            value.text = spawnMngr.timedMode ? "Timed" : "Unlimited";
         } else if (type == SettingType.Duration) {
             value = settings.transform.Find("GameDuration/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text = (spawnMngr.timeLimit / 60f).ToString("F1");
@@ -254,10 +254,10 @@ public class UIManager : MonoBehaviour {
     private void OnScoreChange(int change, ScoreKeeping.ChangeType type) {
         switch (type) {
             case ScoreKeeping.ChangeType.Down:
-                SetStatusText("down-squat +1!");
+                SetStatusText("Squat +1!");
                 break;
             case ScoreKeeping.ChangeType.Up:
-                SetStatusText("up-strech +1!");
+                SetStatusText("Stretch +1!");
                 break;
             case ScoreKeeping.ChangeType.Middle:
                 SetStatusText("Good job!");
@@ -288,26 +288,40 @@ public class UIManager : MonoBehaviour {
 
     public void SetSummaryText(bool timed, float timeLeft) {
         if (timed && timeLeft > 0) {
-            summaryText.fontSize = 60;
+            summaryText.fontSize = 10;
             summaryText.alignment = TextAnchor.MiddleCenter;
             TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeft);
-            summaryText.text =  TimeSpan.FromSeconds(timeLeft).ToString(@"mm\:ss");
+            summaryText.text =  TimeSpan.FromSeconds(timeLeft).ToString(@"mm\:ss") +
+                "\n Balls Spawned: " + scoreKeeper.spawnCount.ToString() + "\n"
+                + "Score: " + scoreKeeper.score.ToString() + "\n" 
+                + "\n Stretches: " + scoreKeeper.up.ToString() + "\n"
+                + "Squats: " + scoreKeeper.down.ToString() + "\n\n" 
+                + "\nPress BUMPER to start a new game\n"
+                + "Press HOME to return to the menu";;
         } else {
-            summaryText.fontSize = 20;
-            summaryText.alignment = TextAnchor.MiddleLeft;
-            summaryText.text = "Summary:\n" 
-                + "Spawned: " + scoreKeeper.spawnCount.ToString() + ";\n"
-                + "Score: " + scoreKeeper.score.ToString() + ";\n" 
-                + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
-                + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
-                + (timed ? ("Session Time: " + (spawnMngr.timeLimit/60).ToString("F1") + " minutes;\n") : 
-                    ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes;\n"))
-                + "Press Bumper to start a new session";
+            summaryText.fontSize = 10;
+            summaryText.alignment = TextAnchor.MiddleCenter;
+            summaryText.text = 
+                "\n Balls Spawned: " + scoreKeeper.spawnCount.ToString() + "\n"
+                + "Score: " + scoreKeeper.score.ToString() + "\n" 
+                + "\n Stretches: " + scoreKeeper.up.ToString() + "\n"
+                + "Squats: " + scoreKeeper.down.ToString() + "\n\n" 
+                + (timed ? ("Session Time: " + (spawnMngr.timeLimit/60).ToString("F1") + " minutes\n") : 
+                    ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes\n"))
+                + "\nPress BUMPER to start a new game\n"
+                + "Press HOME to return to the menu";
         }
     }
 
     public void SetHelpText() {
-        helpText.text = "No bb, catch the ball. In game tap home to return to main menu, press bumper to reset score.";
+        
+        helpText.text = 
+            "Press PLAY to start a game. \n" +
+            "\n Change the game mode and set user preferences in GAME SETTINGS. \n" +
+            "\n The goal of the game is to catch as many balls \n" +
+            "as possible while avoiding obstacles. \n" +
+            "You will earn +10 points per ball caught, good luck! \n" +
+            "\n Press BUMPER to go back";
     }
     #endregion
 }
