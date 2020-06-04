@@ -13,6 +13,7 @@ public class SpawnManager : MonoBehaviour {
     public GameObject trailAndBall;
     public ScoreKeeping scorekeeper;
     public bool timedMode;
+    public bool survivalMode;
     public int timeLimit;
     public float timeLeft;
     #endregion
@@ -30,14 +31,17 @@ public class SpawnManager : MonoBehaviour {
     private void Update() {
         timer += Time.deltaTime;
         timeLeft -= Time.deltaTime;
-        if (timer > SpawnFrequency) {
+        if (timer > SpawnFrequency && scorekeeper.lives > 0) {
             timer = 0.0f;
-            if (!timedMode || (timedMode && timeLeft > 0)) {
-                RandomSpawn();
-                scorekeeper.spawnCount++;
-            }
+            //UIMnger.SetSummaryText(timedMode, timeLeft);
+            //if (!timedMode || (timedMode && timeLeft > 0)) {    
+                //RandomSpawn();  
+                //scorekeeper.spawnCount++;   
+            //}
+            RandomSpawn();  
+            scorekeeper.spawnCount++;   
         }
-        UIMnger.SetSummaryText(timedMode, timeLeft);
+        UIMnger.SetSummaryText(timedMode, survivalMode, timeLeft);
     }
 
     private void OnEnable() {
@@ -76,6 +80,8 @@ public class SpawnManager : MonoBehaviour {
     // then randomly select one point on the plane to spawn the ball
     private void RandomSpawn() {
         DisplayTrailAndBall spawner = trailAndBall.GetComponent<DisplayTrailAndBall>();
+        spawner.survival = survivalMode;
+        spawner.scorekeeper = scorekeeper;
 
         int startIndex = Random.Range(0, numPlane);
         int endIndex = startIndex;

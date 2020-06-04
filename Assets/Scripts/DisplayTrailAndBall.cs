@@ -23,6 +23,8 @@ public class DisplayTrailAndBall: MonoBehaviour
     private VertexPath path;
     private GameObject startHole;
     private GameObject endHole;
+    public ScoreKeeping scorekeeper;
+    public bool survival;
 
     public void setParams(Vector3 start, Vector3 end, Quaternion startRotation, Quaternion endRotation, Vector3 middle) {
         this.start = start;
@@ -37,7 +39,11 @@ public class DisplayTrailAndBall: MonoBehaviour
     void Start()
     {
         // randomly pick a color and get the trail/ball combination for the color
-        random = Random.Range(0, Min(balls.Length, trails.Length));
+        if (survival) {
+            random = Random.Range(0, Min(balls.Length, trails.Length));
+        } else {
+            random = Random.Range(1, Min(balls.Length, trails.Length));
+        }
         trail = trails[random];
         ball = balls[random];
         
@@ -59,6 +65,13 @@ public class DisplayTrailAndBall: MonoBehaviour
         }
         if (ball == null || ball.transform.position == path.GetPointAtTime(1, EndOfPathInstruction.Stop)) 
         {
+            if (ball != null && survival) {
+                if (ball.tag != "Bomb" && scorekeeper.caught) {
+                    scorekeeper.caught = false;
+                } else {
+                    scorekeeper.lives--;
+                }
+            }
             // the ball can be null if it is caught and destoryed
             if (ball != null) Destroy(ball);
             Destroy(startHole);

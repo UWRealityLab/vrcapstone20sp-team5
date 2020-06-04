@@ -23,10 +23,16 @@ public class ScoreKeeping : MonoBehaviour
     public float timer;
 
     [HideInInspector]
+    public bool caught;
+
+    [HideInInspector]
     public enum ChangeType { Up, Middle, Down, Reset };
 
     [HideInInspector]
     public delegate void ScoreChangeNotifier(int change, ChangeType type);
+
+    [HideInInspector]
+    public int lives;
 
     public event ScoreChangeNotifier ScoreChange; 
 
@@ -40,6 +46,7 @@ public class ScoreKeeping : MonoBehaviour
     private void OnCollisionEnter(Collision collision) {
         if (collision.collider.tag == "Ball") {
             score++;
+            caught = true;
             spawnCount++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
             float collisionHeight = collision.contacts[0].point.y;
@@ -62,6 +69,10 @@ public class ScoreKeeping : MonoBehaviour
             ScoreChange?.Invoke(1, type);
             // destroy is handled in explosion script
         }
+
+        if (collision.collider.tag == "Bomb") {
+            lives = 0;
+        }
     }
 
     public void ResetScore() {
@@ -71,6 +82,8 @@ public class ScoreKeeping : MonoBehaviour
         down = 0;
         timer = 0;
         spawnCount = 0;
+        caught = false;
+        lives = 3;
         ScoreChange?.Invoke(-1, ChangeType.Reset);
     }
 }

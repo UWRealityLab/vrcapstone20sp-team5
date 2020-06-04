@@ -205,7 +205,16 @@ public class UIManager : MonoBehaviour {
             beamController.enabled = false;
             Playspace.Instance.Rebuild();
         } else if (tag == "gamemode") {
-            spawnMngr.timedMode = !spawnMngr.timedMode;
+            if (spawnMngr.timedMode) {
+                spawnMngr.timedMode = false;
+                spawnMngr.survivalMode = true;
+            }
+            else if (spawnMngr.survivalMode) {
+                spawnMngr.survivalMode = false;
+            } else {
+                spawnMngr.timedMode = true;
+            }
+            //spawnMngr.timedMode = !spawnMngr.timedMode;
             SetSettingText(SettingType.GameMode);
         } else if (tag == "duration_plus") {
             spawnMngr.timeLimit += 30;
@@ -244,7 +253,14 @@ public class UIManager : MonoBehaviour {
             value.text =  meshOn ? "ON" : "OFF";
         } else if (type == SettingType.GameMode) {
             value = settings.transform.Find("GameMode/TextField/Value").GetComponent<UnityEngine.UI.Text>();
-            value.text = spawnMngr.timedMode ? "Timed" : "Unlimited";
+            if (spawnMngr.timedMode) {
+                value.text = "Timed";
+            } else if (spawnMngr.survivalMode) {
+                value.text = "Survival";
+            } else {
+                value.text = "Unlimited";
+            }
+            //value.text = spawnMngr.timedMode ? "Timed" : "Unlimited";
         } else if (type == SettingType.Duration) {
             value = settings.transform.Find("GameDuration/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text = (spawnMngr.timeLimit / 60f).ToString("F1");
@@ -273,7 +289,7 @@ public class UIManager : MonoBehaviour {
             _control.StartFeedbackPatternVibe(MLInput.Controller.FeedbackPatternVibe.Buzz, MLInput.Controller.FeedbackIntensity.Medium);
         }
         SetScoreText();
-        SetSummaryText(spawnMngr.timedMode, spawnMngr.timeLeft);
+        SetSummaryText(spawnMngr.timedMode, spawnMngr.survivalMode, spawnMngr.timeLeft);
     }
     #endregion
 
@@ -286,7 +302,7 @@ public class UIManager : MonoBehaviour {
         scoreText.text = "Score: " + scoreKeeper.score.ToString();
     }
 
-    public void SetSummaryText(bool timed, float timeLeft) {
+    public void SetSummaryText(bool timed, bool survival, float timeLeft) {
         if (timed && timeLeft > 0) {
             summaryText.fontSize = 10;
             summaryText.alignment = TextAnchor.MiddleCenter;
@@ -298,7 +314,7 @@ public class UIManager : MonoBehaviour {
                 + "Squats: " + scoreKeeper.down.ToString() + "\n\n" 
                 + "\nPress BUMPER to start a new game\n"
                 + "Press HOME to return to the menu";;
-        } else {
+        } else if (!survival) {
             summaryText.fontSize = 10;
             summaryText.alignment = TextAnchor.MiddleCenter;
             summaryText.text = 
@@ -310,6 +326,22 @@ public class UIManager : MonoBehaviour {
                     ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes\n"))
                 + "\nPress BUMPER to start a new game\n"
                 + "Press HOME to return to the menu";
+        }
+        else if (scoreKeeper.lives <= 0) {
+            summaryText.text = "Game Over:\n" 
+            + "Score: " + scoreKeeper.score.ToString() + ";\n" 
+            + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
+            + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
+            + "Press Bumper to try again";
+        } else {
+            summaryText.text = "Summary:\n" 
+            //+ "Spawned: " + scoreKeeper.spawnCount.ToString() + ";\n"
+            + "Score: " + scoreKeeper.score.ToString() + ";\n" 
+            + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
+            + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
+            + "Lives: " + scoreKeeper.lives.ToString() + ";\n" 
+            //+ "Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + "mins;\n"
+            + "Press Bumper to start a new session";
         }
     }
 
