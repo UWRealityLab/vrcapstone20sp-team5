@@ -55,10 +55,14 @@ MonoBehaviour:
   speed: 0.5
   delay: 5
   balls:
-  - {fileID: 7806575625156455770, guid: 54734e8f4f8cc4af2a2d992020f227d8, type: 3}
+  - {fileID: 5140876583438952701, guid: 189d6116323a84b9fbe0902d61fffc86, type: 3}
   - {fileID: 7806575625156455770, guid: 0bc62eb78a2564cb88d2f3ab90a49b9d, type: 3}
+  - {fileID: 7806575625156455770, guid: 54734e8f4f8cc4af2a2d992020f227d8, type: 3}
   - {fileID: 7806575625156455770, guid: c5187be08e2de41d4929583013e9f355, type: 3}
   trails:
   - {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
   - {fileID: 7527758035986124112, guid: d7e38b909505048fa80138de73d4e946, type: 3}
   - {fileID: 7527758035986124112, guid: e4b925450bfaa47688b1a8113d730a21, type: 3}
+  - {fileID: 7527758035986124112, guid: 142ae6fc270b445f7a2ff2a05b4f4d1e, type: 3}
+  scorekeeper: {fileID: 0}
+  survival: 0
