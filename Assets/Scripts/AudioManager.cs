@@ -8,4 +8,5 @@ public class AudioManager : MonoBehaviour
     public AudioSource spawn;
     public AudioSource grab;
     public AudioSource crash;
+    public AudioSource gameEnd;
 }

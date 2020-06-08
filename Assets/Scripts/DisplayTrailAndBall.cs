@@ -104,4 +104,13 @@ public class DisplayTrailAndBall: MonoBehaviour
             }
         }
     }
+
+    // called when game is disabled, distory all existing objects
+    public void Finish() {
+        if (trail != null) Destroy(trail);
+        if (ball != null) Destroy(ball);
+        Destroy(startHole);
+        Destroy(endHole);
+        Destroy(this.gameObject);
+    }
 }

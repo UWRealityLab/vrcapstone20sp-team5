@@ -143,10 +143,13 @@ public class UIManager : MonoBehaviour {
         } 
         // setting page interactions
         if (tag == "freq_plus") {
-            spawnMngr.SpawnFrequency = Min(spawnMngr.SpawnFrequency + 0.5f, 8f);
+            // frequency convertion: 
+            // frequency level 1: 10 sec/spawn, lv2: 5 sec/spawn, lv3: 2.5 sec/spawn...
+            // see SpawnManager.spawnInterval for more
+            spawnMngr.SpawnFrequency = Min(spawnMngr.SpawnFrequency + 1, 7);
             SetSettingText(SettingType.Freq);
         } else if (tag == "freq_minus") {
-            spawnMngr.SpawnFrequency = Max(spawnMngr.SpawnFrequency - 0.5f, 1f);
+            spawnMngr.SpawnFrequency = Max(spawnMngr.SpawnFrequency - 1, 1);
             SetSettingText(SettingType.Freq);
         } else if (tag == "BGM_plus") {
             audioManager.background.volume = Min(audioManager.background.volume + 0.1f, 1f);
@@ -232,7 +235,7 @@ public class UIManager : MonoBehaviour {
         Text value;
         if (type == SettingType.Freq) {
             value = settings.transform.Find("FreqControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
-            value.text = spawnMngr.SpawnFrequency.ToString("F2");
+            value.text = spawnMngr.SpawnFrequency.ToString("F0");
         } else if (type == SettingType.BGM) {
             value = settings.transform.Find("BGMControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text =  (audioManager.background.volume*100).ToString("F0");

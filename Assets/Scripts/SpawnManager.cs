@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using MagicLeapTools;
 using static System.Math;
+using System.Collections.Generic;
 
 
 public class SpawnManager : MonoBehaviour {
 
     #region Public Variables  
-    public float SpawnFrequency;
+    public int SpawnFrequency;
     public float middlePointRange;
     public float angleMin;
     public float angleMax;
@@ -25,13 +26,15 @@ public class SpawnManager : MonoBehaviour {
     private GameObject[] planes;
     private float xmin, xmax, zmin, zmax;
     private AudioSource sound;
+    private List<GameObject> spawners = new List<GameObject>();
     #endregion
     
     #region Unity Methods
     private void Update() {
         timer += Time.deltaTime;
         timeLeft -= Time.deltaTime;
-        if (timer > SpawnFrequency && scorekeeper.lives > 0) {
+        float spawnInterval = 10f / SpawnFrequency;
+        if (timer > spawnInterval && scorekeeper.lives > 0) {
             timer = 0.0f;
             //UIMnger.SetSummaryText(timedMode, timeLeft);
             //if (!timedMode || (timedMode && timeLeft > 0)) {    
@@ -49,6 +52,7 @@ public class SpawnManager : MonoBehaviour {
         timeLeft = timeLimit;
         numPlane = Playspace.Instance.Walls.Length + 2;
         UIMnger = GetComponent<UIManager>();
+        spawners.Clear();
 
         // iterate thourgh the wall to get a sense of the 2d shape
         xmin = Playspace.Instance.Walls[0].RightEdge.x;
@@ -71,6 +75,11 @@ public class SpawnManager : MonoBehaviour {
 
     private void OnDisable() {
         Destroy(sound);
+        foreach(GameObject spawner in spawners) {
+            if (spawner != null) {
+                spawner.GetComponent<DisplayTrailAndBall>().Finish();
+            }
+        }
     }
     #endregion
     
@@ -123,7 +132,7 @@ public class SpawnManager : MonoBehaviour {
         }
 
         spawner.setParams(startLoc, endLoc, startRot, endRot, middleLoc);
-        Instantiate(trailAndBall, Vector3.zero, Quaternion.identity);
+        spawners.Add(Instantiate(trailAndBall, Vector3.zero, Quaternion.identity));
     }
 
     private Vector3 GetRandomPointAroundPlane() {
@@ -170,8 +179,4 @@ public class SpawnManager : MonoBehaviour {
         return (loc, quat);
     }
     #endregion
-    public void ChangeSpawnFrequency(float frequency)
-    {  
-        SpawnFrequency = frequency;
-    }
 }

@@ -39,8 +39,18 @@ public class ScoreKeeping : MonoBehaviour
     public float upLimit = 1.7f;
     public float downLimit = 0.6f;
 
+    private bool played = false;
+
+    private void OnEnable() {
+        lives = 3;
+    }
     private void Update() {
         timer += Time.deltaTime;
+        if (lives <= 0 && !played) {
+            Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().gameEnd,
+                Playspace.Instance.Center,Quaternion.identity);
+            played = true;
+        }
     }
     
     private void OnCollisionEnter(Collision collision) {
@@ -84,6 +94,7 @@ public class ScoreKeeping : MonoBehaviour
         spawnCount = 0;
         caught = false;
         lives = 3;
+        played = false;
         ScoreChange?.Invoke(-1, ChangeType.Reset);
     }
 }
