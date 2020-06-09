@@ -34,6 +34,9 @@ public class ScoreKeeping : MonoBehaviour
     [HideInInspector]
     public int lives;
 
+    [HideInInspector]
+    public int livesSetting = 3;
+
     public event ScoreChangeNotifier ScoreChange; 
 
     public float upLimit = 1.7f;
@@ -93,7 +96,7 @@ public class ScoreKeeping : MonoBehaviour
         timer = 0;
         spawnCount = 0;
         caught = false;
-        lives = 3;
+        lives = livesSetting;
         played = false;
         ScoreChange?.Invoke(-1, ChangeType.Reset);
     }

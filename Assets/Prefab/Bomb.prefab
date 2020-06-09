@@ -310,9 +310,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5140876583438952701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e729069d17ff4e62bc39d2051884622, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ba5d144badac4e018630a24262e012c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 9104655820613617963, guid: 5457aceaa29264f48870b7516e6ee1f2,
+  explosionEffect: {fileID: 9104655820613617963, guid: 79a4185fbca4843b38b4a95bb45b6534,
     type: 3}
   end: {x: 0, y: 0, z: 0}
