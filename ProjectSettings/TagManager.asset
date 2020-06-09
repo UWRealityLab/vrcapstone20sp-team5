@@ -24,6 +24,9 @@ TagManager:
   - duration_plus
   - duration_minus
   - gamemode
+  - Bomb
+  - lives_plus
+  - lives_minus
   layers:
   - Default
   - TransparentFX

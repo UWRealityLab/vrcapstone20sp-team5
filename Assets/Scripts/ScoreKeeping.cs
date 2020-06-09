@@ -60,7 +60,7 @@ public class ScoreKeeping : MonoBehaviour
         if (collision.collider.tag == "Ball") {
             score++;
             caught = true;
-            spawnCount++;
+            //spawnCount++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
             float collisionHeight = collision.contacts[0].point.y;
             
