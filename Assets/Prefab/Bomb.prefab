@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0b74b6f7c4e1f146b4e1257972230c5, type: 2}
+  - {fileID: 2100000, guid: 40ce6793ddbe5c24ba0c03147d6a040e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -217,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5140876583438952701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.902, z: 0}
+  m_LocalPosition: {x: 0, y: 0.902, z: 0.001}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 5140876582285211596}
@@ -251,7 +251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0b74b6f7c4e1f146b4e1257972230c5, type: 2}
+  - {fileID: 2100000, guid: 40ce6793ddbe5c24ba0c03147d6a040e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,9 +310,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5140876583438952701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e729069d17ff4e62bc39d2051884622, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ba5d144badac4e018630a24262e012c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 9104655820613617963, guid: 5457aceaa29264f48870b7516e6ee1f2,
+  explosionEffect: {fileID: 9104655820613617963, guid: 79a4185fbca4843b38b4a95bb45b6534,
     type: 3}
   end: {x: 0, y: 0, z: 0}
