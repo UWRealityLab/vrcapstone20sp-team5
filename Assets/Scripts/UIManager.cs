@@ -322,7 +322,7 @@ public class UIManager : MonoBehaviour {
                 "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
                 + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
                 + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n" 
-                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + setStringBlue("\nPress BUMPER to restart the game\n"
                 + "Press HOME to return to the menu");
         } else if (!survival) {
             summaryText.fontSize = 10;
@@ -333,7 +333,7 @@ public class UIManager : MonoBehaviour {
                 + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n"
                 + (timed ? ("Session Time: " + (spawnMngr.timeLimit/60).ToString("F1") + " minutes\n") : 
                     ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes\n"))
-                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + setStringBlue("\nPress BUMPER to restart the game\n"
                 + "Press HOME to return to the menu");
         }
         else if (scoreKeeper.lives <= 0) {
@@ -343,7 +343,7 @@ public class UIManager : MonoBehaviour {
                 "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
                 + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
                 + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n"  
-                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + setStringBlue("\nPress BUMPER to restart the game\n"
                 + "Press HOME to return to the menu");
         } else {
             summaryText.fontSize = 10;
@@ -355,7 +355,7 @@ public class UIManager : MonoBehaviour {
                 + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n" 
                 + "Lives: " + setStringOrange(scoreKeeper.lives.ToString()) + "\n" 
             //+ "Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + "mins;\n"
-            + setStringBlue("\nPress BUMPER to hide the summary\n"
+            + setStringBlue("\nPress BUMPER to restart the game\n"
             + "Press HOME to return to the menu");
         }
     }

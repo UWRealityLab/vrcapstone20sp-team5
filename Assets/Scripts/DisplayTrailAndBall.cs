@@ -94,8 +94,13 @@ public class DisplayTrailAndBall: MonoBehaviour
                 ball = Instantiate(ball, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
                 // mark end of path since ball.transform.position is not accurate
                 ball.GetComponent<Explosion>().end = this.end; 
-                Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().spawn,
-                    start,Quaternion.identity);
+                if (random == 0) {
+                    Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().bombSpawn,
+                        start,Quaternion.identity);
+                } else {
+                    Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().spawn,
+                        start,Quaternion.identity);
+                }
             }
             if (ball != null) 
             {

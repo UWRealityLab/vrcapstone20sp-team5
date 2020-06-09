@@ -9,4 +9,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource grab;
     public AudioSource crash;
     public AudioSource gameEnd;
+    public AudioSource bombSpawn;
+    public AudioSource bombExplode;
 }

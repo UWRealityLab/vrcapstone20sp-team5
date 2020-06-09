@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571333, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571343, b: 0.30692208, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,6 +156,10 @@ MonoBehaviour:
   grab: {fileID: 1848276347250788684, guid: 6e7a611b10678414187b937c25d02ebd, type: 3}
   crash: {fileID: 3861278729800514125, guid: 4674dbbe59f47410f99958563a2a819b, type: 3}
   gameEnd: {fileID: 3861278729800514125, guid: bd0be959a61574ee5861c5bc9bc08ce6, type: 3}
+  bombSpawn: {fileID: 3861278729800514125, guid: b82dd4e07672c4574baacb011705f50f,
+    type: 3}
+  bombExplode: {fileID: 3861278729800514125, guid: d383aa652da93462b9c8ab4d95992e0f,
+    type: 3}
 --- !u!4 &23888964
 Transform:
   m_ObjectHideFlags: 0

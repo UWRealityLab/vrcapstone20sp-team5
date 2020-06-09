@@ -40,9 +40,11 @@ public class ScoreKeeping : MonoBehaviour
     public float downLimit = 0.6f;
 
     private bool played = false;
+    private int consecutive;
 
     private void OnEnable() {
         lives = 3;
+        consecutive = 0;
     }
     private void Update() {
         timer += Time.deltaTime;
@@ -57,7 +59,6 @@ public class ScoreKeeping : MonoBehaviour
         if (collision.collider.tag == "Ball") {
             score++;
             caught = true;
-            spawnCount++;
             float floorHeight = Playspace.Instance.FloorCenter.y;
             float collisionHeight = collision.contacts[0].point.y;
             
@@ -77,10 +78,18 @@ public class ScoreKeeping : MonoBehaviour
 
             // Notify all event handler of ScoreChange
             ScoreChange?.Invoke(1, type);
+            // catch 3 balls in a row: lives++ with limit 3
+            consecutive++;
+            if (consecutive >= 3) {
+                lives = Mathf.Min(3, lives + 1);
+                consecutive = 0;
+            }
             // destroy is handled in explosion script
         }
 
         if (collision.collider.tag == "Bomb") {
+            Instantiate(GameObject.Find("AudioManager").GetComponent<AudioManager>().bombExplode,
+                        collision.collider.transform.position, Quaternion.identity);
             lives = 0;
         }
     }
@@ -95,6 +104,7 @@ public class ScoreKeeping : MonoBehaviour
         caught = false;
         lives = 3;
         played = false;
+        consecutive = 0;
         ScoreChange?.Invoke(-1, ChangeType.Reset);
     }
 }
