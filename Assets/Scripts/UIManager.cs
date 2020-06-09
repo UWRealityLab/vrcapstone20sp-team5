@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
     public BeamController beamController;   
     public ScoreKeeping scoreKeeper;
     public enum WallStat {Empty, Summary, Setting, Help, Menu};
-    public enum SettingType {Freq, Speed, BGM, Sound, Path, Mesh, Height, GameMode, Duration};
+    public enum SettingType {Freq, Speed, BGM, Sound, Path, Mesh, Height, GameMode, Duration, Lives};
     #endregion
     
     #region Private Variables
@@ -193,6 +193,12 @@ public class UIManager : MonoBehaviour {
         } else if (tag == "speed_minus") {
             trailAndBall.speed =  Max(trailAndBall.speed - 0.1f, 0f);
             SetSettingText(SettingType.Speed);
+        } else if (tag == "lives_plus") {
+            scoreKeeping.livesSetting  =  Min(scoreKeeping.livesSetting + 1, 20);
+            SetSettingText(SettingType.Lives);
+        } else if (tag == "lives_minus") {
+            scoreKeeping.livesSetting  =  Max(scoreKeeping.livesSetting - 1, 0);
+            SetSettingText(SettingType.Lives);
         } else if (tag == "mesh_control") {
             if (meshOn) {
                 GameObject.Find("[Content]/MLSpatialMapper/Original").GetComponent<Renderer>().material.mainTexture = null;
@@ -254,6 +260,9 @@ public class UIManager : MonoBehaviour {
         } else if (type == SettingType.Mesh) {
             value = settings.transform.Find("MeshVisualControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             value.text =  meshOn ? "ON" : "OFF";
+        } else if (type == SettingType.Lives) {
+            value = settings.transform.Find("LivesControl/TextField/Value").GetComponent<UnityEngine.UI.Text>();
+            value.text =  (scoreKeeping.livesSetting).ToString();
         } else if (type == SettingType.GameMode) {
             value = settings.transform.Find("GameMode/TextField/Value").GetComponent<UnityEngine.UI.Text>();
             if (spawnMngr.timedMode) {
