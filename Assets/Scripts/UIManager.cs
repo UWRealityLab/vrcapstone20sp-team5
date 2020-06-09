@@ -297,12 +297,20 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region Public Methods
+    public string setStringBlue(string text) {
+        return "<color=#2e9ad9ff>" + text + "</color>";
+    }
+
+    public string setStringOrange(string text) {
+        return "<color=#f28f2cff>" + text + "</color>";
+    }
+
     public void SetStatusText(string text) {
         statusText.text = text;
     }
 
     public void SetScoreText() {
-        scoreText.text = "Score: " + scoreKeeper.score.ToString();
+        scoreText.text = "Score: " + setStringBlue(scoreKeeper.score.ToString());
     }
 
     public void SetSummaryText(bool timed, bool survival, float timeLeft) {
@@ -310,41 +318,45 @@ public class UIManager : MonoBehaviour {
             summaryText.fontSize = 10;
             summaryText.alignment = TextAnchor.MiddleCenter;
             TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeft);
-            summaryText.text =  TimeSpan.FromSeconds(timeLeft).ToString(@"mm\:ss") +
-                "\n Balls Spawned: " + scoreKeeper.spawnCount.ToString() + "\n"
-                + "Score: " + scoreKeeper.score.ToString() + "\n" 
-                + "\n Stretches: " + scoreKeeper.up.ToString() + "\n"
-                + "Squats: " + scoreKeeper.down.ToString() + "\n\n" 
-                + "\nPress BUMPER to start a new game\n"
-                + "Press HOME to return to the menu";;
+            summaryText.text =  "<size=50>"+ setStringOrange(TimeSpan.FromSeconds(timeLeft).ToString(@"mm\:ss"))+ "</size>"+
+                "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
+                + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
+                + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n" 
+                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + "Press HOME to return to the menu");
         } else if (!survival) {
             summaryText.fontSize = 10;
             summaryText.alignment = TextAnchor.MiddleCenter;
             summaryText.text = 
-                "\n Balls Spawned: " + scoreKeeper.spawnCount.ToString() + "\n"
-                + "Score: " + scoreKeeper.score.ToString() + "\n" 
-                + "\n Stretches: " + scoreKeeper.up.ToString() + "\n"
-                + "Squats: " + scoreKeeper.down.ToString() + "\n\n" 
+                "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
+                + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
+                + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n"
                 + (timed ? ("Session Time: " + (spawnMngr.timeLimit/60).ToString("F1") + " minutes\n") : 
                     ("Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + " minutes\n"))
-                + "\nPress BUMPER to start a new game\n"
-                + "Press HOME to return to the menu";
+                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + "Press HOME to return to the menu");
         }
         else if (scoreKeeper.lives <= 0) {
-            summaryText.text = "Game Over:\n" 
-            + "Score: " + scoreKeeper.score.ToString() + ";\n" 
-            + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
-            + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
-            + "Press Bumper to try again";
+            summaryText.fontSize = 10;
+            summaryText.alignment = TextAnchor.MiddleCenter;
+            summaryText.text = "<size=50>Game Over:</size>\n" +
+                "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
+                + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
+                + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n"  
+                + setStringBlue("\nPress BUMPER to hide the summary\n"
+                + "Press HOME to return to the menu");
         } else {
-            summaryText.text = "Summary:\n" 
+            summaryText.fontSize = 10;
+            summaryText.alignment = TextAnchor.MiddleCenter;
+            summaryText.text = 
             //+ "Spawned: " + scoreKeeper.spawnCount.ToString() + ";\n"
-            + "Score: " + scoreKeeper.score.ToString() + ";\n" 
-            + "Up-stretch: " + scoreKeeper.up.ToString() + ";\n"
-            + "Down-squat: " + scoreKeeper.down.ToString() + ";\n" 
-            + "Lives: " + scoreKeeper.lives.ToString() + ";\n" 
+                "\n Balls Spawned: " + setStringOrange(scoreKeeper.spawnCount.ToString())+ "\n"
+                + "\n Stretches: " + setStringOrange(scoreKeeper.up.ToString()) + "\n"
+                + "Squats: " + setStringOrange(scoreKeeper.down.ToString()) + "\n\n" 
+                + "Lives: " + setStringOrange(scoreKeeper.lives.ToString()) + "\n" 
             //+ "Current Session Time: " + (scoreKeeper.timer/60).ToString("F1") + "mins;\n"
-            + "Press Bumper to start a new session";
+            + setStringBlue("\nPress BUMPER to hide the summary\n"
+            + "Press HOME to return to the menu");
         }
     }
 
