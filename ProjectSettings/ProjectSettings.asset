@@ -669,7 +669,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: /Users/CostaA17/Documents/School/mlCert/anasmagicleapcert.cert
+    m_CertPath: /Users/yatinghan/Documents/VR/certificate/testcertificate.cert
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:
