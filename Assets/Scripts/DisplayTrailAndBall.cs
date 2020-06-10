@@ -25,6 +25,7 @@ public class DisplayTrailAndBall: MonoBehaviour
     private GameObject endHole;
     public ScoreKeeping scorekeeper;
     public bool survival;
+    private bool spawned;
 
     public void setParams(Vector3 start, Vector3 end, Quaternion startRotation, Quaternion endRotation, Vector3 middle) {
         this.start = start;
@@ -53,6 +54,7 @@ public class DisplayTrailAndBall: MonoBehaviour
         startHole = Instantiate(holePrefabStart, start, startRotation);
         endHole = Instantiate(holePrefabEnd, end, endRotation);
         travelDst = 0;
+        spawned = false;
     }
 
     // Update is called once per frame
@@ -92,6 +94,7 @@ public class DisplayTrailAndBall: MonoBehaviour
             if (prevDelay >= 0) 
             {
                 ball = Instantiate(ball, path.GetPointAtDistance(0), path.GetRotationAtDistance(0));
+                spawned = true;
                 // mark end of path since ball.transform.position is not accurate
                 ball.GetComponent<Explosion>().end = this.end; 
                 if (random == 0) {
@@ -113,7 +116,7 @@ public class DisplayTrailAndBall: MonoBehaviour
     // called when game is disabled, distory all existing objects
     public void Finish() {
         if (trail != null) Destroy(trail);
-        if (ball != null) Destroy(ball);
+        if (ball != null && spawned) Destroy(ball);
         Destroy(startHole);
         Destroy(endHole);
         Destroy(this.gameObject);
